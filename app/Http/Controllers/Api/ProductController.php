@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Product;
+use App\Http\Resources\ProductResource;
 class ProductController extends Controller
 {
     /**
@@ -14,7 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // return Product::all();
+        $prosucts = Product::all();
+        return ProductResource::collection($prosucts);
     }
 
     /**
@@ -46,7 +49,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return Product::find($id);
     }
 
     /**
@@ -80,6 +83,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Product::destroy($id);
     }
 }
