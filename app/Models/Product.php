@@ -15,4 +15,8 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    protected $fillable  = ["name", "price","description"];
+    //    protected $hidden = [
+    //     'created_at', 'updated_at',
+    // ];
 }

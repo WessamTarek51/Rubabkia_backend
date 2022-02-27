@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Product;
 class ProductController extends Controller
 {
     /**
@@ -35,7 +35,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product=new Product;
+        $product->name=$request->name;
+        $product->price=$request->price;
+       $product->user_id=auth()->user_id;
+        $product->description=$request->description;
+         $product->category_id =$request->category_id;
+        $product->save();
+        return 'ok';
     }
 
     /**
@@ -69,7 +76,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product= Product::find($id);
+        $product->name=$request->name;
+        $product->price=$request->price;
+       $product->user_id=auth()->user_id;
+        $product->description=$request->description;
+         $product->category_id =$request->category_id;
+        $product->save();
     }
 
     /**
