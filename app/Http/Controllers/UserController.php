@@ -75,7 +75,7 @@ class UserController extends Controller
           public function me(Request $request)
           {
             
-          return $request->user()->name;
+          return $request->user();
           }  
           
     public function index()
