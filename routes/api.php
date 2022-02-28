@@ -1,13 +1,12 @@
 <?php
-
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\CategoryController;
-// use App\Models\User;
-// use App\Models\Product;
-// use App\Models\Category;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +21,7 @@ use App\Http\Controllers\Api\CategoryController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// 1|aPvb1WCXBQ6JZsgTXSwurmtztSpkQuCSBrV40P4z
 
 
 // Route::get('users',function(Request $request){
@@ -36,25 +36,37 @@ Route::delete('users/{id}',[UserController::class,'destroy']);
 
 
 
-Route::get('products',[ProductController::class,'index']);
-Route::get('products/{id}',[ProductController::class,'show']);
-Route::delete('products/{id}',[ProductController::class,'destroy']);
+Route::get('products',[ProductController::class,'index'])->middleware('auth:sanctum');
+Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
+Route::delete('products/{id}',[ProductController::class,'destroy'])->middleware('auth:sanctum');
+ 
 
-// Route::resource('products',ProductController::class);
+Route::get('categories',[CategoryController::class,'index'])->middleware('auth:sanctum');
+Route::get('categories/{id}',[CategoryController::class,'show'])->middleware('auth:sanctum');
+Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middleware('auth:sanctum');
 
 
-// Route::resource('categories',CategoryController::class);
-Route::get('categories',[CategoryController::class,'index']);
-Route::get('categories/{id}',[CategoryController::class,'show']);
-Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
-// Route::get('products',function(Request $request){
-  
-//     return Product::all();
-// });
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+Route::get('/me', [UserController::class, 'me'])->middleware('auth:sanctum');
+Route::post('/logout', [UserController::class, 'logout']);
 
-// Route::get('categories',function(Request $request){
-   
-//     return Category::all();
+// Route::post('/sanctum/token', function (Request $request) {
+//     $request->validate([
+//         'email' => 'required|email',
+//         'password' => 'required',
+//         'device_name' => 'required',
+//     ]);
+ 
+//     $user = User::where('email', $request->email)->first();
+ 
+//     if (! $user || ! Hash::check($request->password, $user->password)) {
+//         throw ValidationException::withMessages([
+//             'email' => ['The provided credentials are incorrect.'],
+//         ]);
+//     }
+ 
+//     return $user->createToken($request->device_name)->plainTextToken;
 // });
 

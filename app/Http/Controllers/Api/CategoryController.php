@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Http\Resources\CtegoryResource;
+
 class CategoryController extends Controller
 {
     /**
@@ -14,7 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        // return Category::all();
+        $categories = Category::all();
+        return CtegoryResource::collection($categories);
     }
 
     /**

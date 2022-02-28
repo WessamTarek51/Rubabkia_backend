@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Http\Resources\ProductResource;
+
 
 class ProductController extends Controller
 {
@@ -13,7 +16,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // return Product::all();
+        $prosucts = Product::all();
+        return ProductResource::collection($prosucts);
     }
 
     /**
@@ -45,7 +50,14 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        // return Product::find($id);
+        $prosucts = Product::find($id);
+        if($prosucts){
+        return new ProductResource($prosucts);
+        }else{
+        return "no data to this product";
+        }
+        
     }
 
     /**
@@ -79,6 +91,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Product::destroy($id);
+        
     }
 }
