@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -13,7 +14,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
- 
+
   //register
 
     public function register(Request $request)
@@ -34,8 +35,8 @@ class UserController extends Controller
                    'image'=>'image',
                    'password' => Hash::make($validatedData['password']),
        ]);
-       
-       
+
+
        $token = $user->createToken('auth_token')->plainTextToken;
 
        return response()->json([
@@ -43,7 +44,7 @@ class UserController extends Controller
                    'token_type' => 'Bearer',
                    'message'=>'regestered successfuly'
             ]);
-       
+
           }
 
 //login
@@ -54,14 +55,16 @@ class UserController extends Controller
           'message' => 'Invalid login details'
                      ], 401);
                  }
-          
+
           $user = User::where('email', $request['email'])->firstOrFail();
-          
+
           $token = $user->createToken('auth_token')->plainTextToken;
-          
+
           return response()->json([
                      'access_token' => $token,
                      'token_type' => 'Bearer',
+                     'id'=>auth()->user()->id,
+                     'name'=>auth()->user()->name,
           ]);
           }
 
@@ -69,18 +72,19 @@ class UserController extends Controller
               auth('sanctum')->user()->tokens()->delete();
               return response()->json([
                 'message' => 'logged out',
-                
+
      ]);
           }
-          public function me(Request $request)
+          public function getdata(Request $request)
           {
-            
-          return $request->user()->name;
-          }  
-          
+            return new UserResource($request);
+
+        //   return $request->user()->name;
+          }
+
     public function index()
     {
-        
+
     }
 
     /**
@@ -116,8 +120,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return new UserResource(User::find(Auth::user()->id));
     }
+
 
     /**
      * Show the form for editing the specified resource.
