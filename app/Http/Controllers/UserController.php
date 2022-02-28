@@ -157,4 +157,10 @@ class UserController extends Controller
     {
         //
     }
+
+    public function hello($id)
+    {
+        return new UserResource(User::find($id));
+
+    }
 }
