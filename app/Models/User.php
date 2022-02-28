@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class);
     }
+    // to return favourite product of user
+    public function favproducts()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

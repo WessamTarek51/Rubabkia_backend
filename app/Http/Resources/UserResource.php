@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             'address'=>$this->address,
             'password'=>$this->password,
             'products' =>$this->products
-           
+
 
             ];
     }

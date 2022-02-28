@@ -11,6 +11,11 @@ class Product extends Model
     {
         return $this->belongsTo(User::class);
     }
+//fav product to many users
+    public function userfav()
+    {
+        return $this->hasMany(User::class);
+    }
     public function category()
     {
         return $this->belongsTo(Category::class);
