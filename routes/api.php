@@ -1,12 +1,12 @@
 <?php
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\UserController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,7 +39,7 @@ Route::delete('users/{id}',[UserController::class,'destroy']);
 Route::get('products',[ProductController::class,'index'])->middleware('auth:sanctum');
 Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
 Route::delete('products/{id}',[ProductController::class,'destroy'])->middleware('auth:sanctum');
- 
+
 
 Route::get('categories',[CategoryController::class,'index'])->middleware('auth:sanctum');
 Route::get('categories/{id}',[CategoryController::class,'show'])->middleware('auth:sanctum');
@@ -47,11 +47,13 @@ Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middlewa
 
 
 
+Route::post("/products",[ProductController::class,'store'])->middleware('auth:sanctum');
+Route::Put("products/{id}",[ProductController::class,'update'])->middleware('auth:sanctum');
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/profile', [UserController::class, 'getdata'])->middleware('auth:sanctum');
 Route::post('/logout', [UserController::class, 'logout']);
-Route::get('/users/{id}', [UserController::class, 'hello']);
+Route::get('/oo/{id}', [UserController::class, 'hello']);
 
 
 

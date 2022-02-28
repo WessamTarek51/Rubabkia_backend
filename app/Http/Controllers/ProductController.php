@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
 
 
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreProductRequest;
 class ProductController extends Controller
 {
     /**
@@ -37,9 +41,16 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $product=new Product();
+        $product->name=$request->name;
+        $product->price=$request->price;
+       $product->user_id=Auth::id();
+        $product->description=$request->description;
+         $product->category_id =$request->category_id;
+        $product->save();
+        return 'ok';
     }
 
     /**
@@ -57,7 +68,7 @@ class ProductController extends Controller
         }else{
         return "no data to this product";
         }
-        
+
     }
 
     /**
@@ -78,9 +89,16 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProductRequest $request, $id)
     {
-        //
+
+        $product= Product::find($id);
+        $product->name=$request->name;
+        $product->price=$request->price;
+       $product->user_id=Auth::id();
+        $product->description=$request->description;
+         $product->category_id =$request->category_id;
+        $product->save();
     }
 
     /**
@@ -92,6 +110,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         return Product::destroy($id);
-        
+
     }
 }
