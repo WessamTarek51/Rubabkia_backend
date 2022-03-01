@@ -38,7 +38,7 @@ Route::delete('users/{id}',[UserController::class,'destroy']);
 
 Route::get('products',[ProductController::class,'index'])->middleware('auth:sanctum');
 Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
-Route::delete('products/{id}',[ProductController::class,'destroy'])->middleware('auth:sanctum');
+Route::delete('products/{id}',[ProductController::class,'destroy']);
 
 
 Route::get('categories',[CategoryController::class,'index'])->middleware('auth:sanctum');
