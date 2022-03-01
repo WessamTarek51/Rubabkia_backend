@@ -71,6 +71,12 @@ class ProductController extends Controller
 
     }
 
+    public function ShowDetailesProduct($id)
+    {
+        return Product::find($id);
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *

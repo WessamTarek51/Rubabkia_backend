@@ -54,8 +54,8 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/profile', [UserController::class, 'getdata'])->middleware('auth:sanctum');
 Route::post('/logout', [UserController::class, 'logout']);
 Route::get('/oo/{id}', [UserController::class, 'hello']);
-
-
+//Route show detailes of product
+Route::get('product/{id}', [ProductController::class, 'ShowDetailesProduct']);
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([
