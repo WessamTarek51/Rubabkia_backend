@@ -84,7 +84,6 @@ class UserController extends Controller
 
     public function index()
     {
-
     }
 
     /**
@@ -156,5 +155,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function hello($id)
+    {
+        return new UserResource(User::find($id));
+
     }
 }
