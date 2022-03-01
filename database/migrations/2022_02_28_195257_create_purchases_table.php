@@ -18,6 +18,7 @@ class CreatePurchasesTable extends Migration
             $table->string('name');
             $table->float('price');
             $table->string('description');
+            $table->string('image');
             $table->timestamps();
         });
     }
