@@ -43,7 +43,7 @@ Route::delete('products/{id}',[ProductController::class,'destroy']);
 
 Route::get('categories',[CategoryController::class,'index']);
 Route::get('categories/{id}',[CategoryController::class,'show']);
-Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middleware('auth:sanctum');
+Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
 
 
@@ -51,7 +51,7 @@ Route::post("/products",[ProductController::class,'store']);
 Route::Put("products/{id}",[ProductController::class,'update']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::get('/profile', [UserController::class, 'getdata'])->middleware('auth:sanctum');
+Route::get('/profile', [UserController::class, 'getdata']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::get('/oo/{id}', [UserController::class, 'hello']);
 
