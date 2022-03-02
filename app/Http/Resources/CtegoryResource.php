@@ -16,7 +16,7 @@ class CtegoryResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            
+            'id'=>$this->id,
             'name'=>$this->name,
             'image'=>$this->image
 

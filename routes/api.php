@@ -47,7 +47,7 @@ Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middlewa
 
 
 
-Route::post("/products",[ProductController::class,'store'])->middleware('auth:sanctum');
+Route::post("/products",[ProductController::class,'store']);
 Route::Put("products/{id}",[ProductController::class,'update'])->middleware('auth:sanctum');
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
