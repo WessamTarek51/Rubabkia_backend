@@ -37,18 +37,18 @@ Route::delete('users/{id}',[UserController::class,'destroy']);
 
 
 Route::get('products',[ProductController::class,'index']);
-Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
+Route::get('products/{id}',[ProductController::class,'show']);
 Route::delete('products/{id}',[ProductController::class,'destroy']);
 
 
 Route::get('categories',[CategoryController::class,'index']);
-Route::get('categories/{id}',[CategoryController::class,'show'])->middleware('auth:sanctum');
+Route::get('categories/{id}',[CategoryController::class,'show']);
 Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middleware('auth:sanctum');
 
 
 
 Route::post("/products",[ProductController::class,'store']);
-Route::Put("products/{id}",[ProductController::class,'update'])->middleware('auth:sanctum');
+Route::Put("products/{id}",[ProductController::class,'update']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/profile', [UserController::class, 'getdata'])->middleware('auth:sanctum');

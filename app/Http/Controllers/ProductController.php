@@ -92,14 +92,22 @@ class ProductController extends Controller
      */
     public function update(StoreProductRequest $request, $id)
     {
+        $product = Product::find($id);
+        if(is_null($product)){
+                  return response()->json(['message' => 'Not Found'],404);
+        }
+        else{
+                $product->update($request->all());
+                 return response($product,200);
+        }
 
-        $product= Product::find($id);
-        $product->name=$request->name;
-        $product->price=$request->price;
-       $product->user_id=Auth::id();
-        $product->description=$request->description;
-         $product->category_id =$request->category_id;
-        $product->save();
+    //     $product= Product::find($id);
+    //     $product->name=$request->name;
+    //     $product->price=$request->price;
+    //    $product->user_id=Auth::id();
+    //     $product->description=$request->description;
+    //      $product->category_id =$request->category_id;
+    //     $product->save();
     }
 
     /**
