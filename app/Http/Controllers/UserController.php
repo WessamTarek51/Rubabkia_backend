@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -13,37 +14,56 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
- 
+
   //register
 
     public function register(Request $request)
-    {
+    {  
+    
       $validatedData = $request->validate([
                    'name' => 'required|string|max:255',
-                   'email' => 'required|string|email|max:255|unique:users',
+                   'email' => 'required|string|email|max:255',
                    'password' => 'required|string|min:8',
-                   'phone_number' => ' required|digits:11',
+                   'phone_number' => ' required|string|max:11',
+                   'image'=>'required',
                    'address'=>'required|string',
               ]);
-
+     $user = User::where('email', $request['email'])->first();
+     if($user){
+        return response()->json([
+               'status'=>0,
+               'message'=>'email has already been taken',
+               'code'=>422
+        ]);
+       }
+    else{
+        if($request->hasFile('image')){
+           
+            $completeimagename=$request->file('image')->getClientOriginalName();
+            $imagename=pathinfo($completeimagename,PATHINFO_FILENAME);
+            $extension=$request->file('image')->getClientOriginalExtension();
+            $compic=str_replace(' ','_',$imagename).'-'.rand().'_'.time().'.'.$extension;
+            $path=$request->file('image')->storeAs('public/images',$compic);
+        }
       $user = User::create([
                    'name' => $validatedData['name'],
                    'email' => $validatedData['email'],
                    'phone_number'=>$validatedData['phone_number'],
                    'address'=>$validatedData['address'],
-                   'image'=>'image',
+                   'image'=>$compic,
                    'password' => Hash::make($validatedData['password']),
        ]);
-       
-       
-       $token = $user->createToken('auth_token')->plainTextToken;
 
-       return response()->json([
-                   'access_token' => $token,
-                   'token_type' => 'Bearer',
-                   'message'=>'regestered successfuly'
+
+       $token = $user->createToken('auth_token')->plainTextToken;
+                 return response()->json([
+                //    'access_token' => $token,
+                //    'token_type' => 'Bearer',
+                    'status'=>1,
+                   'message'=>'regestered successfuly',
+                   'code'=>200
             ]);
-       
+        }
           }
 
 //login
@@ -51,17 +71,25 @@ class UserController extends Controller
           {
           if (!Auth::attempt($request->only('email', 'password'))) {
           return response()->json([
-          'message' => 'Invalid login details'
-                     ], 401);
+          'message' => 'Invalid login details',
+          'status'=>0,
+          'code'=>401
+                     ]);
                  }
-          
+      
           $user = User::where('email', $request['email'])->firstOrFail();
-          
+
           $token = $user->createToken('auth_token')->plainTextToken;
-          
+
           return response()->json([
                      'access_token' => $token,
                      'token_type' => 'Bearer',
+                     'status'=>1,
+                     'message'=>'login successfully',
+                     'code'=>200,
+                     'id'=>auth()->user()->id,
+                     'name'=>auth()->user()->name,
+                    
           ]);
           }
 
@@ -69,18 +97,19 @@ class UserController extends Controller
               auth('sanctum')->user()->tokens()->delete();
               return response()->json([
                 'message' => 'logged out',
-                
+
      ]);
           }
-          public function me(Request $request)
+          public function getdata(Request $request)
           {
-            
-          return $request->user();
-          }  
-          
+            return new UserResource($request);
+
+        //   return $request->user()->name;
+          }
+
     public function index()
     {
-        
+
     }
 
     /**
@@ -116,8 +145,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return new UserResource(User::find(Auth::user()->id));
     }
+
 
     /**
      * Show the form for editing the specified resource.
