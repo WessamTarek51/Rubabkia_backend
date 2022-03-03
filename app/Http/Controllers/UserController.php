@@ -18,8 +18,8 @@ class UserController extends Controller
   //register
 
     public function register(Request $request)
-    {  
-    
+    {
+
       $validatedData = $request->validate([
                    'name' => 'required|string|max:255',
                    'email' => 'required|string|email|max:255',
@@ -38,7 +38,7 @@ class UserController extends Controller
        }
     else{
         if($request->hasFile('image')){
-           
+
             $completeimagename=$request->file('image')->getClientOriginalName();
             $imagename=pathinfo($completeimagename,PATHINFO_FILENAME);
             $extension=$request->file('image')->getClientOriginalExtension();
@@ -76,7 +76,7 @@ class UserController extends Controller
           'code'=>401
                      ]);
                  }
-      
+
           $user = User::where('email', $request['email'])->firstOrFail();
 
           $token = $user->createToken('auth_token')->plainTextToken;
@@ -89,7 +89,7 @@ class UserController extends Controller
                      'code'=>200,
                      'id'=>auth()->user()->id,
                      'name'=>auth()->user()->name,
-                    
+
           ]);
           }
 

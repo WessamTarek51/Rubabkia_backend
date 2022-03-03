@@ -56,7 +56,7 @@ Route::post("/products",[ProductController::class,'store']);
 Route::Put("products/{id}",[ProductController::class,'update']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::get('/profile', [UserController::class, 'getdata']);
+Route::get('/profile', [UserController::class, 'getdata'])->middleware('auth:sanctum');
 Route::post('/logout', [UserController::class, 'logout']);
 
 Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
