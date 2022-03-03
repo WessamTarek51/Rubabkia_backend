@@ -40,11 +40,12 @@ Route::delete('users/{id}',[UserController::class,'destroy']);
 
 Route::get('products',[ProductController::class,'index']);
 Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
+Route::get('product/{catID}',[ProductController::class,'showcat']);
 Route::delete('products/{id}',[ProductController::class,'destroy']);
 
 
 Route::get('categories',[CategoryController::class,'index']);
-Route::get('categories/{id}',[CategoryController::class,'show'])->middleware('auth:sanctum');
+Route::get('categories/{id}',[CategoryController::class,'show']);
 Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middleware('auth:sanctum');
 
 
