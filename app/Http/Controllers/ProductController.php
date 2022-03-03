@@ -112,4 +112,17 @@ class ProductController extends Controller
         return Product::destroy($id);
 
     }
+
+
+
+    public function showcat($catID)
+    {
+        $id = Product::select('*')->where('category_id',$catID)->get();
+      
+
+        return ProductResource::collection($id);
+
+                    // return $id;
+        // $prosucts = Product::all();
+    }
 }
