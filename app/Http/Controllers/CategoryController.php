@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Http\Resources\CtegoryResource;
+
 
 class CategoryController extends Controller
 {
@@ -13,7 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        // return Category::all();
+        $categories = Category::all();
+        return CtegoryResource::collection($categories);
+        
     }
 
     /**
@@ -45,7 +51,15 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        // return Category::find($id);
+        $categories = Category::find($id);
+        if($categories){
+        return new CtegoryResource($categories);
+        }else{
+        return "no data to this category";
+        }
+        
+        
     }
 
     /**
@@ -79,6 +93,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Category::destroy($id);
+        
     }
 }

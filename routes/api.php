@@ -1,7 +1,10 @@
 <?php
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ForgetPasswordController;
@@ -18,16 +21,50 @@ use App\Http\Controllers\UserController;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user();  
 });
+// 1|aPvb1WCXBQ6JZsgTXSwurmtztSpkQuCSBrV40P4z
+
+
+// Route::get('users',function(Request $request){
+
+//     return User::all();
+// });
+// Route::resource('users',UserController::class);
+
+Route::get('users',[UserController::class,'index']);
+Route::get('users/{id}',[UserController::class,'show']);
+Route::delete('users/{id}',[UserController::class,'destroy']);
+
+
+
+Route::get('products',[ProductController::class,'index']);
+Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
+Route::delete('products/{id}',[ProductController::class,'destroy']);
+
+
+Route::get('categories',[CategoryController::class,'index']);
+Route::get('categories/{id}',[CategoryController::class,'show'])->middleware('auth:sanctum');
+Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middleware('auth:sanctum');
+
+
+
+Route::post("/products",[ProductController::class,'store'])->middleware('auth:sanctum');
+Route::Put("products/{id}",[ProductController::class,'update'])->middleware('auth:sanctum');
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/profile', [UserController::class, 'getdata'])->middleware('auth:sanctum');
 Route::post('/logout', [UserController::class, 'logout']);
+
 Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
 Route::post('/forget', [ForgetPasswordController::class, 'forget']);
 Route::post('/reset', [ForgetPasswordController::class, 'reset']);
+
+Route::get('/oo/{id}', [UserController::class, 'hello']);
+
+
+
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([
@@ -46,3 +83,4 @@ Route::post('/reset', [ForgetPasswordController::class, 'reset']);
 
 //     return $user->createToken($request->device_name)->plainTextToken;
 // });
+
