@@ -110,19 +110,23 @@ class ProductController extends Controller
         else{
                 // $product->update($request->all());
                 //  return response($product,200);
-
+                //  $product->save();
+                //  return 'ok';
 
                 $product->name=$request->name;
                 $product->price=$request->price;
                $product->user_id=1;
                 $product->description=$request->description;
                  $product->category_id =$request->category_id;
-                //  $product->image=$request->image;
 
                  if($request->hasFile('image')){
-                  $destination='public/products' .  $product->image;
+
+                   $destination='public/products'.$product->image;
+                   return $destination;
                   if(File::exists($destination)){
+
                       File::delete($destination);
+
                   }
 
                     $complateName=$request->file('image')->getClientOriginalName();
@@ -132,18 +136,20 @@ class ProductController extends Controller
                      $path=$request->file('image')->storeAs('public/products',$compPic);
                      $product->image=$compPic;
                  }
+
 //
 
                 $product->save();
-                return 'ok';
+                return $product->image;
     //     $product->name=$request->name;
     //     $product->price=$request->price;
     //    $product->user_id=Auth::id();
     //     $product->description=$request->description;
     //      $product->category_id =$request->category_id;
         //     $product->save();
+ }
     }
-}
+
     /**
      * Remove the specified resource from storage.
      *
