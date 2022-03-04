@@ -49,7 +49,17 @@ class ProductController extends Controller
        $product->user_id=1;
         $product->description=$request->description;
          $product->category_id =$request->category_id;
-         $product->image=$request->image;
+
+         if($request->hasFile('image')){
+            $complateName=$request->file('image')->getClientOriginalName();
+             $NameOnly=pathinfo($complateName,PATHINFO_FILENAME);
+             $ExtensionName=$request->file('image')->getClientOriginalExtension();
+             $compPic=str_replace('','',$NameOnly).'.'.$ExtensionName;
+             $path=$request->file('image')->storeAs('public/products',$compPic);
+             $product->image=$compPic;
+         }
+
+
         $product->save();
         return 'ok';
     }
