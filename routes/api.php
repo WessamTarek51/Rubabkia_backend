@@ -22,7 +22,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
- 
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -59,8 +59,8 @@ Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
 
 
-Route::post("/products",[ProductController::class,'store']);
-Route::Put("products/{id}",[ProductController::class,'update']);
+Route::post("/products",[ProductController::class,'store'])->middleware('auth:sanctum');
+Route::Put("products/{id}",[ProductController::class,'update'])->middleware('auth:sanctum');
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/profile', [UserController::class, 'getdata'])->middleware('auth:sanctum');
