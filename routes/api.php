@@ -22,7 +22,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
- 
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -39,8 +39,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('users',[UserController::class,'index']);
 Route::get('users/{id}',[UserController::class,'show']);
+Route::get('user/{id}',[UserController::class,'UserByID']);
 Route::delete('users/{id}',[UserController::class,'destroy']);
-Route::get('users/[id]',[UserController::class,'getuserbyID']);
+Route::post('userbyId',[UserController::class,'getuserbyID']);
+// Route::post('editProfile',[UserController::class,'editProfile']);
+
 
 
 

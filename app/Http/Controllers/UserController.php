@@ -7,6 +7,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserResource;
 
+use PhpParser\Node\Stmt\Catch_;
+use SebastianBergmann\Environment\Console;
+use App\Http\Resources\UserIdRessource;
+
 class UserController extends Controller
 {
     /**
@@ -186,11 +190,44 @@ class UserController extends Controller
     {
         return new UserResource(User::find($id));
 
-    }public function getuserbyID($id)
-    {
-        // return new UserResource(User::find($id));
-        $users = User::wherein('id',[1,2,3])->get();
-        return UserResource::collection($users);
+ }
+
+    public function editProfile(Request $request){
+try{
+    $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255',
+                'password' => 'required|string|min:8',
+                'phone_number' => ' required|string|max:11',
+                'image'=>'required',
+                'address'=>'required|string',
+           ]);
+
+               $user=User::find($request->user->id);
+               $user->name = $request->name;
+               $user->email = $request->email;
+               $user->address = $request->address;
+               $user->update();
+            return response()->json(['status'=>'true','message'=>'profile updated','data'=>$user]);
 
     }
+    catch(\Exception $e){
+        return response()->json(['status'=>'false','message'=>$e->getMessage(),'data'=>[]],500);
+       }
+    }
+
+
+    public function getuserbyID(Request $request){
+        $users = User::whereIn('id', $request->id)->get();
+
+        return $users;
+
+    }
+    public function UserByID($id)
+    {
+        return new UserIdRessource(User::find($id));
+
+    }
+
 }
+
