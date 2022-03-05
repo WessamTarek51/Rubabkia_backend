@@ -186,5 +186,11 @@ class UserController extends Controller
     {
         return new UserResource(User::find($id));
 
+    }public function getuserbyID($id)
+    {
+        // return new UserResource(User::find($id));
+        $users = User::wherein('id',[1,2,3])->get();
+        return UserResource::collection($users);
+
     }
 }
