@@ -9,6 +9,8 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\UserController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,6 +21,9 @@ use App\Http\Controllers\UserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+ 
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -67,8 +72,8 @@ Route::post('/forget', [ForgetPasswordController::class, 'forget']);
 Route::post('/reset', [ForgetPasswordController::class, 'reset']);
 
 Route::get('/oo/{id}', [UserController::class, 'hello']);
-
-
+//Route show detailes of product
+Route::get('product/{id}', [ProductController::class, 'ShowDetailesProduct']);
 
 
 // Route::post('/sanctum/token', function (Request $request) {

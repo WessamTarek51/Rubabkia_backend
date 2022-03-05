@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ShowproductResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
@@ -83,16 +84,23 @@ class ProductController extends Controller
 
     }
 
+    public function ShowDetailesProduct($id)
+    {
+        $prosucts = Product::find($id);
+
+        return new ShowproductResource($prosucts);
+
+    }
+
+
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -167,7 +175,7 @@ class ProductController extends Controller
     public function showcat($catID)
     {
         $id = Product::select('*')->where('category_id',$catID)->get();
-      
+
 
         return ProductResource::collection($id);
 
