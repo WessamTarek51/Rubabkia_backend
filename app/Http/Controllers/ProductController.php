@@ -149,12 +149,6 @@ class ProductController extends Controller
 
                 $product->save();
                 return $product->image;
-    //     $product->name=$request->name;
-    //     $product->price=$request->price;
-    //    $product->user_id=Auth::id();
-    //     $product->description=$request->description;
-    //      $product->category_id =$request->category_id;
-        //     $product->save();
  }
     }
 

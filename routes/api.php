@@ -1,9 +1,11 @@
 <?php
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\EmailVerificationController;
@@ -60,6 +62,9 @@ Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
 
 Route::post("/products",[ProductController::class,'store'])->middleware('auth:sanctum');
+
+Route::post("/purchases",[PurchasesController::class,'store'])->middleware('auth:sanctum');
+
 Route::Put("products/{id}",[ProductController::class,'update'])->middleware('auth:sanctum');
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
