@@ -42,7 +42,7 @@ Route::get('users/{id}',[UserController::class,'show']);
 Route::get('user/{id}',[UserController::class,'UserByID']);
 Route::delete('users/{id}',[UserController::class,'destroy']);
 Route::post('userbyId',[UserController::class,'getuserbyID']);
-// Route::post('editProfile',[UserController::class,'editProfile']);
+Route::post('editProfile',[UserController::class,'editProfile'])->middleware('auth:sanctum');
 
 
 
