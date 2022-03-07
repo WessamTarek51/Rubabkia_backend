@@ -47,7 +47,7 @@ class ProductController extends Controller
         $product=new Product();
         $product->name=$request->name;
         $product->price=$request->price;
-       $product->user_id=1;
+       $product->user_id=$request->user()->id;
         $product->description=$request->description;
          $product->category_id =$request->category_id;
 
@@ -57,7 +57,7 @@ class ProductController extends Controller
              $NameOnly=pathinfo($complateName,PATHINFO_FILENAME);
              $ExtensionName=$request->file('image')->getClientOriginalExtension();
              $compPic=str_replace('','',$NameOnly).'.'.$ExtensionName;
-             $path=$request->file('image')->storeAs('public/products',$compPic);
+             $path=$request->file('image')->move('public/products',$compPic);
              $product->image=$compPic;
          }
 
@@ -122,7 +122,7 @@ class ProductController extends Controller
 
                 $product->name=$request->name;
                 $product->price=$request->price;
-               $product->user_id=1;
+               $product->user_id=$request->user()->id;
                 $product->description=$request->description;
                  $product->category_id =$request->category_id;
 
@@ -140,7 +140,7 @@ class ProductController extends Controller
                      $NameOnly=pathinfo($complateName,PATHINFO_FILENAME);
                      $ExtensionName=$request->file('image')->getClientOriginalExtension();
                      $compPic=str_replace('','',$NameOnly).'.'.$ExtensionName;
-                     $path=$request->file('image')->storeAs('public/products',$compPic);
+                     $path=$request->file('image')->move('public/products',$compPic);
                      $product->image=$compPic;
                  }
 
@@ -148,12 +148,6 @@ class ProductController extends Controller
 
                 $product->save();
                 return $product->image;
-    //     $product->name=$request->name;
-    //     $product->price=$request->price;
-    //    $product->user_id=Auth::id();
-    //     $product->description=$request->description;
-    //      $product->category_id =$request->category_id;
-        //     $product->save();
  }
     }
 

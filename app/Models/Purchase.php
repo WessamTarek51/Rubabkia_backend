@@ -11,4 +11,5 @@ class Purchase extends Model
     {
         return $this->belongsTo(User::class);
     }
+    protected $fillable  = ["name", "price","description","user_id","image"];
 }
