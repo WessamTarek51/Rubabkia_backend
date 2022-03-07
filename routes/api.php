@@ -66,7 +66,7 @@ Route::post("/products",[ProductController::class,'store'])->middleware('auth:sa
 Route::post("/purchases",[PurchasesController::class,'store'])->middleware('auth:sanctum');
 
 Route::post("image/{id}",[ProductController::class,'updateImage'])->middleware('auth:sanctum');
-
+Route::post("fav",[ProductController::class,'AddFav'])->middleware('auth:sanctum');
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);

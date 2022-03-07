@@ -10,8 +10,12 @@ use App\Http\Resources\ShowproductResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\udateProductRequest;
 use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Facades\File;
+
+use function PHPUnit\Framework\returnSelf;
+
 class ProductController extends Controller
 {
     /**
@@ -109,7 +113,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateImage(StoreProductRequest $request, $id)
+    public function updateImage(udateProductRequest $request, $id)
     {
         $product = Product::find($id);
         if(is_null($product)){
@@ -177,5 +181,14 @@ class ProductController extends Controller
 
                     // return $id;
         // $prosucts = Product::all();
+    }
+
+    public function  AddFav(Request $request){
+
+        // $product = Product::find($id);
+        // return $product;
+
+        $product = Product::whereIn('id', $request->id)->get();
+         return $product;
     }
 }
