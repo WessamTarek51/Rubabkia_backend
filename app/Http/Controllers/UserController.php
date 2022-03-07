@@ -198,21 +198,32 @@ try{
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255',
                 'password' => 'required|string|min:8',
-                'phone_number' => ' required|string|max:11',
+                'phone_number' => 'required|string|max:11',
                 'image'=>'required',
                 'address'=>'required|string',
            ]);
+           if($request->hasFile('image')){
 
-               $user=User::find($request->user->id);
+            $completeimagename=$request->file('image')->getClientOriginalName();
+            $imagename=pathinfo($completeimagename,PATHINFO_FILENAME);
+            $extension=$request->file('image')->getClientOriginalExtension();
+            $compic=str_replace(' ','_',$imagename).'-'.rand().'_'.time().'.'.$extension;
+            $path=$request->file('image')->storeAs('public/images',$compic);
+        }
+
+               $user=User::find($request->user()->id);
                $user->name = $request->name;
                $user->email = $request->email;
                $user->address = $request->address;
+               $user->password = Hash::make($request->password);
+               $user->phone_number = $request->phone_number;
+               $user->image = $compic;
                $user->update();
-            return response()->json(['status'=>'true','message'=>'profile updated','data'=>$user]);
+            return response()->json(['status'=>1,'message'=>'profile updated','code'=>200,'data'=>$user]);
 
     }
     catch(\Exception $e){
-        return response()->json(['status'=>'false','message'=>$e->getMessage(),'data'=>[]],500);
+        return response()->json(['status'=>0,'message'=>$e->getMessage(),'data'=>[],'code'=>500]);
        }
     }
 
