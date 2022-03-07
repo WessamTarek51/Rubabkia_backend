@@ -108,7 +108,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProductRequest $request, $id)
+    public function updateImage(StoreProductRequest $request, $id)
     {
         $product = Product::find($id);
         if(is_null($product)){
@@ -120,16 +120,12 @@ class ProductController extends Controller
                 //  $product->save();
                 //  return 'ok';
 
-                $product->name=$request->name;
-                $product->price=$request->price;
-               $product->user_id=$request->user()->id;
-                $product->description=$request->description;
-                 $product->category_id =$request->category_id;
+
 
                  if($request->hasFile('image')){
 
                    $destination='public/products'.$product->image;
-                   return $destination;
+
                   if(File::exists($destination)){
 
                       File::delete($destination);
@@ -142,12 +138,18 @@ class ProductController extends Controller
                      $compPic=str_replace('','',$NameOnly).'.'.$ExtensionName;
                      $path=$request->file('image')->move('public/products',$compPic);
                      $product->image=$compPic;
+
                  }
 
 //
+                        $product->name=$request->name;
+                        $product->price=$request->price;
+                        $product->user_id=$request->user()->id;
+                        $product->description=$request->description;
+                        $product->category_id =$request->category_id;
 
-                $product->save();
-                return $product->image;
+                $product->update();
+                return $product;
  }
     }
 
