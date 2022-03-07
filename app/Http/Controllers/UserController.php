@@ -10,9 +10,14 @@ use App\Http\Resources\UserResource;
 use PhpParser\Node\Stmt\Catch_;
 use SebastianBergmann\Environment\Console;
 use App\Http\Resources\UserIdRessource;
+use App\Models\Favproduct as Favorite;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
+
 
 class UserController extends Controller
 {
+    protected $cid;
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +52,7 @@ class UserController extends Controller
             $imagename=pathinfo($completeimagename,PATHINFO_FILENAME);
             $extension=$request->file('image')->getClientOriginalExtension();
             $compic=str_replace(' ','_',$imagename).'-'.rand().'_'.time().'.'.$extension;
-            $path=$request->file('image')->move('public/images',$compic);
+            $path=$request->file('image')->storeAs('public/images',$compic);
         }
       $user = User::create([
                    'name' => $validatedData['name'],
@@ -240,5 +245,17 @@ try{
 
     }
 
+    public function like($product_id){
+    // $this->cid = auth()->guard('user')->user()->id;
+    $cid=auth()->user()->id;
+    if(!Favorite::where(['product_id'=>$product_id,'user_id'=>$cid])->exists()){
+        Favorite::create(['product_id'=>$product_id,'user_id'=>$cid]);
+
+
+    }
+    $product = Product::find($product_id);
+    return new ProductResource($product);
+
+}
 }
 

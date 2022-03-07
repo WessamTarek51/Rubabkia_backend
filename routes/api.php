@@ -45,6 +45,10 @@ Route::get('user/{id}',[UserController::class,'UserByID']);
 Route::delete('users/{id}',[UserController::class,'destroy']);
 Route::post('userbyId',[UserController::class,'getuserbyID']);
 Route::post('editProfile',[UserController::class,'editProfile'])->middleware('auth:sanctum');
+Route::get('like/{id}',[UserController::class,'like'])->middleware('auth:sanctum');
+Route::get('showlike/{id}',[ProductController::class,'showlikeproduct'])->middleware('auth:sanctum');
+
+
 
 
 

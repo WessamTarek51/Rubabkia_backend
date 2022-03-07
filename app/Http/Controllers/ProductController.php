@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Facades\File;
+use App\Models\Favproduct;
+use App\Http\Resources\FavProductResource;
 class ProductController extends Controller
 {
     /**
@@ -176,5 +178,14 @@ class ProductController extends Controller
 
                     // return $id;
         // $prosucts = Product::all();
+    }
+
+    public function showlikeproduct($id){
+        $user = auth()->user()->id;
+        $product = Favproduct::select ('*')->where('user_id',$user)->get();
+        // return $product;
+
+
+        return  FavProductResource::collection($product);
     }
 }

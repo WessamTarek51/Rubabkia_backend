@@ -12,13 +12,19 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 //fav product to many users
-    public function userfav()
+    public function favorite()
     {
-        return $this->hasMany(User::class);
+        // $cid=auth()->guard('user')->user()!=null ? auth()->guard('user')->user()->id : null;
+        $cid= auth()->user()->id;
+        return $this->hasMany(Favproduct::class,'id','product_id')->where('user_id',$cid);
     }
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function like(){
+        return $this->favorite()->selectRaw('product_id,count(*) as count')->groupBy('product_id');
     }
 
 
