@@ -86,9 +86,8 @@ class ProductController extends Controller
 
     public function ShowDetailesProduct($id)
     {
-        $prosucts = Product::find($id);
 
-        return new ShowproductResource($prosucts);
+        return new ShowproductResource(Product::find($id));
 
     }
 

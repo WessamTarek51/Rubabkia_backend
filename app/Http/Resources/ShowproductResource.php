@@ -20,22 +20,22 @@ class ShowproductResource extends JsonResource
 ->get(); */
 
         return [
-           'user-name'=>$this->user->name,
-            'product-name'=>$this->name,
-            'product-price'=>$this->price,
-            'product-description'=>$this->description,
-            'product-image'=>$this->image
-           
-         
+            'userid'=>$this->user->id,
+            'username'=>$this->user->name,
+            'name'=>$this->name,
+            'price'=>$this->price,
+            'description'=>$this->description,
+            'image'=>$this->image
 
 
-           
 
- 
+
+
+
+
         ];
     }
 }
 
 
 
- 

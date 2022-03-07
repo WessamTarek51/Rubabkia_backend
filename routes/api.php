@@ -76,7 +76,7 @@ Route::post('/reset', [ForgetPasswordController::class, 'reset']);
 
 Route::get('/oo/{id}', [UserController::class, 'hello']);
 //Route show detailes of product
-Route::get('product/{id}', [ProductController::class, 'ShowDetailesProduct']);
+Route::get('productid/{id}', [ProductController::class, 'ShowDetailesProduct']);
 
 
 // Route::post('/sanctum/token', function (Request $request) {
