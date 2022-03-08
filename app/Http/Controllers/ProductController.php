@@ -14,6 +14,7 @@ use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Facades\File;
 use App\Models\Favproduct;
 use App\Http\Resources\FavProductResource;
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     /**
@@ -187,5 +188,18 @@ class ProductController extends Controller
 
 
         return  FavProductResource::collection($product);
+    }
+    public function delete($id)
+    {
+
+         DB::table('favproducts')->where('product_id',$id)->delete();
+         return Product::destroy($id);
+
+    }
+    public function favdelete($id)
+    {
+
+      return   DB::table('favproducts')->where('product_id',$id)->delete();
+
     }
 }

@@ -58,7 +58,11 @@ Route::get('products',[ProductController::class,'index']);
 // Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
 Route::get('product/{catID}',[ProductController::class,'showcat']);
 Route::get('products/{id}',[ProductController::class,'show']);
-Route::delete('products/{id}',[ProductController::class,'destroy'])->middleware('auth:sanctum');
+Route::delete('products/{id}',[ProductController::class,'destroy']);
+Route::delete('deleteproduct/{id}',[ProductController::class,'delete']);
+Route::delete('favdelete/{id}',[ProductController::class,'favdelete']);
+
+
 
 
 Route::get('categories',[CategoryController::class,'index']);
