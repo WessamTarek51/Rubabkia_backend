@@ -22,7 +22,13 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
+    {
+        // return Product::all();
+        $prosucts = Product::all();
+        return ProductResource::collection($prosucts);
+    }
+    public function productsWithOutLogin()
     {
         // return Product::all();
         $prosucts = Product::all();
@@ -87,7 +93,7 @@ class ProductController extends Controller
 
     }
 
-    public function ShowDetailesProduct($id)
+    public function ShowDetailesProduct($id,Request $request)
     {
 
         return new ShowproductResource(Product::find($id));
@@ -196,10 +202,10 @@ class ProductController extends Controller
          return Product::destroy($id);
 
     }
-    public function favdelete($id)
+    public function favdelete($id,Request $request)
     {
 
-      return   DB::table('favproducts')->where('product_id',$id)->delete();
+      return   DB::table('favproducts')->where('product_id',$id)->where('user_id',auth()->user()->id)->delete();
 
     }
 }

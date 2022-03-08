@@ -19,7 +19,7 @@ class FavProductResource extends JsonResource
             'name'=>$this->product->name,
             'price'=>$this->product->price,
             'image'=>$this->product->image,
-         
+
 
 
 

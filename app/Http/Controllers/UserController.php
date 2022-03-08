@@ -257,5 +257,14 @@ try{
     return new ProductResource($product);
 
 }
+    public function isFav($product_id,Request $request){
+       if(  Favorite::where('user_id',auth()->user()->id)->where('product_id',$product_id)->exists()){
+        return "true";
+       }
+       else{
+           return "false";
+       }
+
+    }
 }
 

@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Favproduct as Favorite;
+
 
 class ShowproductResource extends JsonResource
 {
@@ -25,7 +27,8 @@ class ShowproductResource extends JsonResource
             'name'=>$this->name,
             'price'=>$this->price,
             'description'=>$this->description,
-            'image'=>$this->image
+            'image'=>$this->image,
+            'isFav'=>Favorite::where('user_id',auth()->user()->id)->where('product_id',$this->id)->exists()
 
 
 

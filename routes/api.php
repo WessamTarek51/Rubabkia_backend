@@ -54,13 +54,16 @@ Route::get('showlike/{id}',[ProductController::class,'showlikeproduct'])->middle
 
 
 
-Route::get('products',[ProductController::class,'index']);
+Route::get('products',[ProductController::class,'index'])->middleware('auth:sanctum');
+Route::get('productsWithOutLogin',[ProductController::class,'productsWithOutLogin']);
+
 // Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
 Route::get('product/{catID}',[ProductController::class,'showcat']);
 Route::get('products/{id}',[ProductController::class,'show']);
 Route::delete('products/{id}',[ProductController::class,'destroy']);
 Route::delete('deleteproduct/{id}',[ProductController::class,'delete']);
-Route::delete('favdelete/{id}',[ProductController::class,'favdelete']);
+Route::delete('favdelete/{id}',[ProductController::class,'favdelete'])->middleware('auth:sanctum');
+
 
 
 
@@ -83,6 +86,8 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/profile', [UserController::class, 'getdata'])->middleware('auth:sanctum');
 Route::post('/logout', [UserController::class, 'logout']);
+Route::get('/isFav/{product_id}', [UserController::class, 'isFav'])->middleware('auth:sanctum');
+
 
 Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
@@ -91,7 +96,7 @@ Route::post('/reset', [ForgetPasswordController::class, 'reset']);
 
 Route::get('/oo/{id}', [UserController::class, 'hello']);
 //Route show detailes of product
-Route::get('productid/{id}', [ProductController::class, 'ShowDetailesProduct']);
+Route::get('productid/{id}', [ProductController::class, 'ShowDetailesProduct'])->middleware('auth:sanctum');
 
 
 // Route::post('/sanctum/token', function (Request $request) {
