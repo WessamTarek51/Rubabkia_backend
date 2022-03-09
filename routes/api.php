@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NotificationController;
 
 
 /*
@@ -97,6 +98,10 @@ Route::post('/reset', [ForgetPasswordController::class, 'reset']);
 Route::get('/oo/{id}', [UserController::class, 'hello']);
 //Route show detailes of product
 Route::get('productid/{id}', [ProductController::class, 'ShowDetailesProduct'])->middleware('auth:sanctum');
+
+Route::post("/notifications",[NotificationController::class,'store'])->middleware('auth:sanctum');
+
+
 
 
 // Route::post('/sanctum/token', function (Request $request) {
