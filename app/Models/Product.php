@@ -27,6 +27,13 @@ class Product extends Model
         return $this->favorite()->selectRaw('product_id,count(*) as count')->groupBy('product_id');
     }
 
+    public function notification()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+
+
 
     protected $fillable  = ["name", "price","description","user_id","category_id","image"];
 }
