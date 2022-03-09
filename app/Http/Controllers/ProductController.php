@@ -174,6 +174,11 @@ class ProductController extends Controller
         return Product::destroy($id);
 
     }
+    public function deletePurchases($id)
+    {
+        return Product::destroy($id);
+
+    }
 
 
 

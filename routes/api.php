@@ -61,6 +61,7 @@ Route::get('productsWithOutLogin',[ProductController::class,'productsWithOutLogi
 Route::get('product/{catID}',[ProductController::class,'showcat']);
 Route::get('products/{id}',[ProductController::class,'show']);
 Route::delete('products/{id}',[ProductController::class,'destroy']);
+Route::delete('deletepurchases/{id}',[ProductController::class,'deletePurchases']);
 Route::delete('deleteproduct/{id}',[ProductController::class,'delete']);
 Route::delete('favdelete/{id}',[ProductController::class,'favdelete'])->middleware('auth:sanctum');
 
