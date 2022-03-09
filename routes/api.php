@@ -41,17 +41,31 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('users',[UserController::class,'index']);
 Route::get('users/{id}',[UserController::class,'show']);
+Route::get('user/{id}',[UserController::class,'UserByID']);
 Route::delete('users/{id}',[UserController::class,'destroy']);
-Route::get('users/[id]',[UserController::class,'getuserbyID']);
+Route::post('userbyId',[UserController::class,'getuserbyID']);
+Route::post('editProfile',[UserController::class,'editProfile'])->middleware('auth:sanctum');
+Route::get('like/{id}',[UserController::class,'like'])->middleware('auth:sanctum');
+Route::get('showlike/{id}',[ProductController::class,'showlikeproduct'])->middleware('auth:sanctum');
 
 
 
 
-Route::get('products',[ProductController::class,'index']);
+
+
+
+Route::get('products',[ProductController::class,'index'])->middleware('auth:sanctum');
+Route::get('productsWithOutLogin',[ProductController::class,'productsWithOutLogin']);
+
 // Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
 Route::get('product/{catID}',[ProductController::class,'showcat']);
 Route::get('products/{id}',[ProductController::class,'show']);
 Route::delete('products/{id}',[ProductController::class,'destroy']);
+Route::delete('deleteproduct/{id}',[ProductController::class,'delete']);
+Route::delete('favdelete/{id}',[ProductController::class,'favdelete'])->middleware('auth:sanctum');
+
+
+
 
 
 Route::get('categories',[CategoryController::class,'index']);
@@ -72,6 +86,8 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/profile', [UserController::class, 'getdata'])->middleware('auth:sanctum');
 Route::post('/logout', [UserController::class, 'logout']);
+Route::get('/isFav/{product_id}', [UserController::class, 'isFav'])->middleware('auth:sanctum');
+
 
 Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
@@ -80,7 +96,7 @@ Route::post('/reset', [ForgetPasswordController::class, 'reset']);
 
 Route::get('/oo/{id}', [UserController::class, 'hello']);
 //Route show detailes of product
-Route::get('product/{id}', [ProductController::class, 'ShowDetailesProduct']);
+Route::get('productid/{id}', [ProductController::class, 'ShowDetailesProduct'])->middleware('auth:sanctum');
 
 
 // Route::post('/sanctum/token', function (Request $request) {

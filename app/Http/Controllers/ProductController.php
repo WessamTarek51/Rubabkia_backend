@@ -13,9 +13,9 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\udateProductRequest;
 use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Facades\File;
-
-use function PHPUnit\Framework\returnSelf;
-
+ use App\Models\Favproduct;
+use App\Http\Resources\FavProductResource;
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     /**
@@ -23,7 +23,13 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
+    {
+        // return Product::all();
+        $prosucts = Product::all();
+        return ProductResource::collection($prosucts);
+    }
+    public function productsWithOutLogin()
     {
         // return Product::all();
         $prosucts = Product::all();
@@ -88,11 +94,10 @@ class ProductController extends Controller
 
     }
 
-    public function ShowDetailesProduct($id)
+    public function ShowDetailesProduct($id,Request $request)
     {
-        $prosucts = Product::find($id);
 
-        return new ShowproductResource($prosucts);
+        return new ShowproductResource(Product::find($id));
 
     }
 
@@ -183,12 +188,25 @@ class ProductController extends Controller
         // $prosucts = Product::all();
     }
 
-    public function  AddFav(Request $request){
-
-        // $product = Product::find($id);
+    public function showlikeproduct($id){
+        $user = auth()->user()->id;
+        $product = Favproduct::select ('*')->where('user_id',$user)->get();
         // return $product;
 
-        $product = Product::whereIn('id', $request->id)->get();
-         return $product;
+
+        return  FavProductResource::collection($product);
+    }
+    public function delete($id)
+    {
+
+         DB::table('favproducts')->where('product_id',$id)->delete();
+         return Product::destroy($id);
+
+    }
+    public function favdelete($id,Request $request)
+    {
+
+      return   DB::table('favproducts')->where('product_id',$id)->where('user_id',auth()->user()->id)->delete();
+
     }
 }

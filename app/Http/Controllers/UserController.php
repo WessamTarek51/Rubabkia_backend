@@ -7,8 +7,17 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserResource;
 
+use PhpParser\Node\Stmt\Catch_;
+use SebastianBergmann\Environment\Console;
+use App\Http\Resources\UserIdRessource;
+use App\Models\Favproduct as Favorite;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
+
+
 class UserController extends Controller
 {
+    protected $cid;
     /**
      * Display a listing of the resource.
      *
@@ -43,7 +52,7 @@ class UserController extends Controller
             $imagename=pathinfo($completeimagename,PATHINFO_FILENAME);
             $extension=$request->file('image')->getClientOriginalExtension();
             $compic=str_replace(' ','_',$imagename).'-'.rand().'_'.time().'.'.$extension;
-            $path=$request->file('image')->move('public/images',$compic);
+            $path=$request->file('image')->storeAs('public/images',$compic);
         }
       $user = User::create([
                    'name' => $validatedData['name'],
@@ -186,11 +195,76 @@ class UserController extends Controller
     {
         return new UserResource(User::find($id));
 
-    }public function getuserbyID($id)
+ }
+
+    public function editProfile(Request $request){
+try{
+    $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255',
+                'password' => 'required|string|min:8',
+                'phone_number' => 'required|string|max:11',
+                'image'=>'required',
+                'address'=>'required|string',
+           ]);
+           if($request->hasFile('image')){
+
+            $completeimagename=$request->file('image')->getClientOriginalName();
+            $imagename=pathinfo($completeimagename,PATHINFO_FILENAME);
+            $extension=$request->file('image')->getClientOriginalExtension();
+            $compic=str_replace(' ','_',$imagename).'-'.rand().'_'.time().'.'.$extension;
+            $path=$request->file('image')->storeAs('public/images',$compic);
+        }
+
+               $user=User::find($request->user()->id);
+               $user->name = $request->name;
+               $user->email = $request->email;
+               $user->address = $request->address;
+               $user->password = Hash::make($request->password);
+               $user->phone_number = $request->phone_number;
+               $user->image = $compic;
+               $user->update();
+            return response()->json(['status'=>1,'message'=>'profile updated','code'=>200,'data'=>$user]);
+
+    }
+    catch(\Exception $e){
+        return response()->json(['status'=>0,'message'=>$e->getMessage(),'data'=>[],'code'=>500]);
+       }
+    }
+
+
+    public function getuserbyID(Request $request){
+        $users = User::whereIn('id', $request->id)->get();
+
+        return $users;
+
+    }
+    public function UserByID($id)
     {
-        // return new UserResource(User::find($id));
-        $users = User::wherein('id',[1,2,3])->get();
-        return UserResource::collection($users);
+        return new UserIdRessource(User::find($id));
+
+    }
+
+    public function like($product_id){
+    // $this->cid = auth()->guard('user')->user()->id;
+    $cid=auth()->user()->id;
+    if(!Favorite::where(['product_id'=>$product_id,'user_id'=>$cid])->exists()){
+        Favorite::create(['product_id'=>$product_id,'user_id'=>$cid]);
+
+
+    }
+    $product = Product::find($product_id);
+    return new ProductResource($product);
+
+}
+    public function isFav($product_id,Request $request){
+       if(  Favorite::where('user_id',auth()->user()->id)->where('product_id',$product_id)->exists()){
+        return "true";
+       }
+       else{
+           return "false";
+       }
 
     }
 }
+
