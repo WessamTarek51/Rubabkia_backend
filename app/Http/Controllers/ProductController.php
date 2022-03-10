@@ -194,7 +194,7 @@ class ProductController extends Controller
 
         return  FavProductResource::collection($product);
     }
-    public function delete($id)
+    public function delete($id,Request $request)
     {
 
          DB::table('favproducts')->where('product_id',$id)->delete();
