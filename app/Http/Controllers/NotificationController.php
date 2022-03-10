@@ -36,19 +36,14 @@ class NotificationController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request)
-    {   
-
-        // $cid=auth()->user()->id;
-        // Notification::create(['product_id'=>$this->product()->id,'buyer_id'=>$cid,'seller_id'=>5]);
-    
-        // $noti=new Notification();
-        // $customer = Product::find($request->product_id);
-        // $seller = Product::find($request->seller_id);
-        // $noti->buyer_id=auth()->user()->id;
-        // $noti->seller_id=$seller;
-        // $noti->product_id =$customer;
-        // $noti ->save();
+    public function store(Request $request,$id)
+    {
+        $product= Product::find($id);
+        $noti=new Notification();
+        $noti->buyer_id=auth()->user()->id;
+        $noti->seller_id=$product->user_id;
+        $noti->product_id=$product->id;
+        $noti->save();
     }
 
     /**
