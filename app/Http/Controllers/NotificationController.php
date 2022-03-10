@@ -42,13 +42,13 @@ class NotificationController extends Controller
         // $cid=auth()->user()->id;
         // Notification::create(['product_id'=>$this->product()->id,'buyer_id'=>$cid,'seller_id'=>5]);
     
-        // $noti=new Notification();
+        $noti=new Notification();
         // $customer = Product::find($request->product_id);
         // $seller = Product::find($request->seller_id);
-        // $noti->buyer_id=auth()->user()->id;
-        // $noti->seller_id=$seller;
-        // $noti->product_id =$customer;
-        // $noti ->save();
+        $noti->buyer_id=auth()->user()->id;
+        $noti->seller_id=$request->product()->user_id;
+        $noti->product_id =$request->product()->id;
+        $noti ->save();
     }
 
     /**

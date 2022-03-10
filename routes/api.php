@@ -31,14 +31,8 @@ use App\Http\Controllers\NotificationController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-// 1|aPvb1WCXBQ6JZsgTXSwurmtztSpkQuCSBrV40P4z
 
 
-// Route::get('users',function(Request $request){
-
-//     return User::all();
-// });
-// Route::resource('users',UserController::class);
 
 Route::get('users',[UserController::class,'index']);
 Route::get('users/{id}',[UserController::class,'show']);
