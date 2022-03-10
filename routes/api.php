@@ -99,8 +99,7 @@ Route::post('/reset', [ForgetPasswordController::class, 'reset']);
 Route::get('/oo/{id}', [UserController::class, 'hello']);
 //Route show detailes of product
 Route::get('productid/{id}', [ProductController::class, 'ShowDetailesProduct'])->middleware('auth:sanctum');
-
-Route::post("notifications",[NotificationController::class,'store'])->middleware('auth:sanctum');
+Route::post("/buy/{id}",[NotificationController::class,'store'])->middleware('auth:sanctum');
 
 
 
