@@ -174,13 +174,6 @@ class ProductController extends Controller
         return Product::destroy($id);
 
     }
-    public function deletePurchases($id)
-    {
-        return Product::destroy($id);
-
-    }
-
-
 
     public function showcat($catID)
     {
@@ -205,6 +198,7 @@ class ProductController extends Controller
     {
 
          DB::table('favproducts')->where('product_id',$id)->delete();
+         DB::table('notifications')->where('product_id',$id)->delete();
          return Product::destroy($id);
 
     }
