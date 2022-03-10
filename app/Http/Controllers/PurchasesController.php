@@ -8,6 +8,7 @@ use App\Http\Requests\StorePurchasesRequest;
 use App\Http\Resources\PurchasesResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Notification;
 class PurchasesController extends Controller
 {
     /**
@@ -38,21 +39,19 @@ class PurchasesController extends Controller
      */
     public function store(StorePurchasesRequest $request ,$id)
     {
-  //
-  $Purchase=new Purchase();
 
-
-    $Purchase->name=$request->name;
-    $Purchase->price=$request->price;
-     $Purchase->user_id=Auth()->user()->id;
-    $Purchase->description=$request->description;
-     $Purchase->image=$request->image;
-
+        $notifi=Notification::find($id);
+     $Purchase=new Purchase();
+    $Purchase->name=$notifi->product->name;
+    $Purchase->price=$notifi->product->price;
+    $Purchase->user_id=$notifi->buyer_id;
+    $Purchase->description=$notifi->product->description;
+    $Purchase->image=$notifi->product->image;
 
        $Purchase->save();
-     DB::table('favproducts')->where('product_id',$id)->delete();
-     DB::table('notifications')->where('product_id',$id)->delete();
-     return Product::destroy($id);
+     DB::table('favproducts')->where('product_id',$notifi->product->id)->delete();
+     DB::table('notifications')->where('product_id',$notifi->product->id)->delete();
+     return Product::destroy($notifi->product->id);
      return 'purchases ok';
 
     }
@@ -99,6 +98,7 @@ class PurchasesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Notification::destroy($id);
+
     }
 }
