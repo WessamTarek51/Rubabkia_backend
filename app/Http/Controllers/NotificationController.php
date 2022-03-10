@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Notification;
 use App\Models\Product;
 use App\Models\User;
+use App\Http\Resources\NotificationResource;
 // use Illuminate\Database\Eloquent\Model\Product;
 class NotificationController extends Controller
 {
@@ -89,5 +90,13 @@ class NotificationController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function notifay(){
+        $seller = auth()->user()->id;
+
+        $product = Notification::select ('*')->where('seller_id',$seller)->get();
+
+
+        return  NotificationResource::collection($product);
     }
 }

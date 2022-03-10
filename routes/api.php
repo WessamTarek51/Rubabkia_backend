@@ -62,7 +62,7 @@ Route::get('productsWithOutLogin',[ProductController::class,'productsWithOutLogi
 Route::get('product/{catID}',[ProductController::class,'showcat']);
 Route::get('products/{id}',[ProductController::class,'show']);
 Route::delete('products/{id}',[ProductController::class,'destroy']);
-Route::delete('deleteproduct/{id}',[ProductController::class,'delete']);
+Route::delete('deleteproduct/{id}',[ProductController::class,'delete'])->middleware('auth:sanctum');
 Route::delete('favdelete/{id}',[ProductController::class,'favdelete'])->middleware('auth:sanctum');
 
 
@@ -100,6 +100,7 @@ Route::get('/oo/{id}', [UserController::class, 'hello']);
 Route::get('productid/{id}', [ProductController::class, 'ShowDetailesProduct'])->middleware('auth:sanctum');
 
 Route::post("/buy/{id}",[NotificationController::class,'store'])->middleware('auth:sanctum');
+Route::get("notification/{id}",[NotificationController::class,'notifay'])->middleware('auth:sanctum');
 
 
 
