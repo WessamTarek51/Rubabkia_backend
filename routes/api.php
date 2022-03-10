@@ -72,7 +72,8 @@ Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
 Route::post("/products",[ProductController::class,'store'])->middleware('auth:sanctum');
 
-Route::post("/purchases",[PurchasesController::class,'store'])->middleware('auth:sanctum');
+Route::post("/purchases/{id}",[PurchasesController::class,'store'])->middleware('auth:sanctum');
+Route::delete("/nof/{id}",[PurchasesController::class,'destroy'])->middleware('auth:sanctum');
 
 Route::post("image/{id}",[ProductController::class,'updateImage'])->middleware('auth:sanctum');
 Route::post("fav",[ProductController::class,'AddFav'])->middleware('auth:sanctum');

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 use  App\Models\Purchase;
+use  App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePurchasesRequest;
 use App\Http\Resources\PurchasesResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Notification;
 class PurchasesController extends Controller
 {
     /**
@@ -33,28 +37,22 @@ class PurchasesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePurchasesRequest $request)
+    public function store(StorePurchasesRequest $request ,$id)
     {
-  //
-  $Purchase=new Purchase();
 
+        $notifi=Notification::find($id);
+     $Purchase=new Purchase();
+    $Purchase->name=$notifi->product->name;
+    $Purchase->price=$notifi->product->price;
+    $Purchase->user_id=$notifi->buyer_id;
+    $Purchase->description=$notifi->product->description;
+    $Purchase->image=$notifi->product->image;
 
-    $Purchase->name=$request->name;
-    $Purchase->price=$request->price;
-     $Purchase->user_id=$request->user()->id;
-    $Purchase->description=$request->description;
-     $Purchase->image=$request->image;
-$Purchase->save();
-
-//      if($request->hasFile('image')){
-//         $complateName=$request->file('image')->getClientOriginalName();
-//          $NameOnly=pathinfo($complateName,PATHINFO_FILENAME);
-//          $ExtensionName=$request->file('image')->getClientOriginalExtension();
-//          $compPic=str_replace('','',$NameOnly).'.'.$ExtensionName;
-//          $path=$request->file('image')->move('public/products',$compPic);
-//          $product->image=$compPic;
-//      }
-return 'purchases ok';
+       $Purchase->save();
+     DB::table('favproducts')->where('product_id',$notifi->product->id)->delete();
+     DB::table('notifications')->where('product_id',$notifi->product->id)->delete();
+     return Product::destroy($notifi->product->id);
+     return 'purchases ok';
 
     }
 
@@ -100,6 +98,7 @@ return 'purchases ok';
      */
     public function destroy($id)
     {
-        //
+        return Notification::destroy($id);
+
     }
 }
