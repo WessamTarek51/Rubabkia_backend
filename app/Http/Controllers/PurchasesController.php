@@ -5,6 +5,8 @@ use  App\Models\Purchase;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePurchasesRequest;
 use App\Http\Resources\PurchasesResource;
+use Illuminate\Support\Facades\Auth;
+
 class PurchasesController extends Controller
 {
     /**
@@ -41,10 +43,10 @@ class PurchasesController extends Controller
 
     $Purchase->name=$request->name;
     $Purchase->price=$request->price;
-     $Purchase->user_id=$request->user()->id;
+     $Purchase->user_id=Auth()->user()->id;
     $Purchase->description=$request->description;
      $Purchase->image=$request->image;
-$Purchase->save();
+       $Purchase->save();
 
 //      if($request->hasFile('image')){
 //         $complateName=$request->file('image')->getClientOriginalName();
