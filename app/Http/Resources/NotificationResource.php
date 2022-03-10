@@ -17,9 +17,12 @@ class NotificationResource extends JsonResource
     {
         $user=User::select('name')->where('id',$this->buyer_id)->first();
         return [
-            'id'=>$this->buyer_id,
-            'username'=>$user,
+            'id_not'=>$this->id,
+            'user_id'=>$this->buyer_id,
+            'buyer_name'=>$user->name,
             'image'=>$this->product->image,
+            'price'=>$this->product->price,
+            'description'=>$this->product->description,
             'name'=>$this->product->name,
 
 

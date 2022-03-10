@@ -175,8 +175,6 @@ class ProductController extends Controller
 
     }
 
-
-
     public function showcat($catID)
     {
         $id = Product::select('*')->where('category_id',$catID)->get();
@@ -201,7 +199,6 @@ class ProductController extends Controller
 
          DB::table('favproducts')->where('product_id',$id)->delete();
          DB::table('notifications')->where('product_id',$id)->delete();
-
          return Product::destroy($id);
 
     }
