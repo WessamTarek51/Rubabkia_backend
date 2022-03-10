@@ -39,16 +39,18 @@ class NotificationController extends Controller
     public function store(Request $request)
     {   
 
-        // $cid=auth()->user()->id;
-        // Notification::create(['product_id'=>$this->product()->id,'buyer_id'=>$cid,'seller_id'=>5]);
-    
+        // // $cid=auth()->user()->id;
+        // // Notification::create(['product_id'=>$this->product()->id,'buyer_id'=>$cid,'seller_id'=>5]);
+        
         // $noti=new Notification();
         // $customer = Product::find($request->product_id);
-        // $seller = Product::find($request->seller_id);
+        // $seller = User::find($customer->user_id);
+        // // $seller= Product::select('user_id')->where('id',$customer)->get();
         // $noti->buyer_id=auth()->user()->id;
-        // $noti->seller_id=$seller;
-        // $noti->product_id =$customer;
+        // $noti->seller_id=$seller->id;
+        // $noti->product_id =$customer->id;
         // $noti ->save();
+        // return $seller;
     }
 
     /**
