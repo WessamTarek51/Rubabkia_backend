@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 use  App\Models\Purchase;
+use  App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePurchasesRequest;
 use App\Http\Resources\PurchasesResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class PurchasesController extends Controller
 {
     /**
@@ -33,7 +36,7 @@ class PurchasesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePurchasesRequest $request)
+    public function store(StorePurchasesRequest $request ,$id)
     {
   //
   $Purchase=new Purchase();
@@ -41,20 +44,16 @@ class PurchasesController extends Controller
 
     $Purchase->name=$request->name;
     $Purchase->price=$request->price;
-     $Purchase->user_id=$request->user()->id;
+     $Purchase->user_id=Auth()->user()->id;
     $Purchase->description=$request->description;
      $Purchase->image=$request->image;
-$Purchase->save();
 
-//      if($request->hasFile('image')){
-//         $complateName=$request->file('image')->getClientOriginalName();
-//          $NameOnly=pathinfo($complateName,PATHINFO_FILENAME);
-//          $ExtensionName=$request->file('image')->getClientOriginalExtension();
-//          $compPic=str_replace('','',$NameOnly).'.'.$ExtensionName;
-//          $path=$request->file('image')->move('public/products',$compPic);
-//          $product->image=$compPic;
-//      }
-return 'purchases ok';
+
+       $Purchase->save();
+     DB::table('favproducts')->where('product_id',$id)->delete();
+     DB::table('notifications')->where('product_id',$id)->delete();
+     return Product::destroy($id);
+     return 'purchases ok';
 
     }
 
