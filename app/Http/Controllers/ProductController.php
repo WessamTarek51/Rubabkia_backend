@@ -10,9 +10,10 @@ use App\Http\Resources\ShowproductResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\udateProductRequest;
 use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Facades\File;
-use App\Models\Favproduct;
+ use App\Models\Favproduct;
 use App\Http\Resources\FavProductResource;
 use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
@@ -117,7 +118,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateImage(StoreProductRequest $request, $id)
+    public function updateImage(udateProductRequest $request, $id)
     {
         $product = Product::find($id);
         if(is_null($product)){
@@ -195,10 +196,12 @@ class ProductController extends Controller
 
         return  FavProductResource::collection($product);
     }
-    public function delete($id)
+    public function delete($id,Request $request)
     {
 
          DB::table('favproducts')->where('product_id',$id)->delete();
+         DB::table('notifications')->where('product_id',$id)->delete();
+
          return Product::destroy($id);
 
     }

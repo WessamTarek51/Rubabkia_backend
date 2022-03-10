@@ -56,7 +56,7 @@ Route::get('productsWithOutLogin',[ProductController::class,'productsWithOutLogi
 Route::get('product/{catID}',[ProductController::class,'showcat']);
 Route::get('products/{id}',[ProductController::class,'show']);
 Route::delete('products/{id}',[ProductController::class,'destroy']);
-Route::delete('deleteproduct/{id}',[ProductController::class,'delete']);
+Route::delete('deleteproduct/{id}',[ProductController::class,'delete'])->middleware('auth:sanctum');
 Route::delete('favdelete/{id}',[ProductController::class,'favdelete'])->middleware('auth:sanctum');
 
 
@@ -75,7 +75,7 @@ Route::post("/products",[ProductController::class,'store'])->middleware('auth:sa
 Route::post("/purchases",[PurchasesController::class,'store'])->middleware('auth:sanctum');
 
 Route::post("image/{id}",[ProductController::class,'updateImage'])->middleware('auth:sanctum');
-
+Route::post("fav",[ProductController::class,'AddFav'])->middleware('auth:sanctum');
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
@@ -93,7 +93,8 @@ Route::get('/oo/{id}', [UserController::class, 'hello']);
 //Route show detailes of product
 Route::get('productid/{id}', [ProductController::class, 'ShowDetailesProduct'])->middleware('auth:sanctum');
 
-Route::post("/notifications",[NotificationController::class,'store'])->middleware('auth:sanctum');
+Route::post("/buy/{id}",[NotificationController::class,'store'])->middleware('auth:sanctum');
+Route::get("notification/{id}",[NotificationController::class,'notifay'])->middleware('auth:sanctum');
 
 
 

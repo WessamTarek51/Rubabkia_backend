@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Notification;
 use App\Models\Product;
 use App\Models\User;
+use App\Http\Resources\NotificationResource;
 // use Illuminate\Database\Eloquent\Model\Product;
 class NotificationController extends Controller
 {
@@ -36,19 +37,14 @@ class NotificationController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request)
-    {   
-
-        // $cid=auth()->user()->id;
-        // Notification::create(['product_id'=>$this->product()->id,'buyer_id'=>$cid,'seller_id'=>5]);
-    
+    public function store(Request $request,$id)
+    {
+        $product= Product::find($id);
         $noti=new Notification();
-        // $customer = Product::find($request->product_id);
-        // $seller = Product::find($request->seller_id);
         $noti->buyer_id=auth()->user()->id;
-        $noti->seller_id=$request->product()->user_id;
-        $noti->product_id =$request->product()->id;
-        $noti ->save();
+        $noti->seller_id=$product->user_id;
+        $noti->product_id=$product->id;
+        $noti->save();
     }
 
     /**
@@ -94,5 +90,13 @@ class NotificationController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function notifay(){
+        $seller = auth()->user()->id;
+
+        $product = Notification::select ('*')->where('seller_id',$seller)->get();
+
+
+        return  NotificationResource::collection($product);
     }
 }
