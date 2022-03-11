@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use  App\Models\Purchase;
 use  App\Models\Product;
+use  App\Models\Sales;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePurchasesRequest;
 use App\Http\Resources\PurchasesResource;
@@ -41,14 +42,23 @@ class PurchasesController extends Controller
     {
 
         $notifi=Notification::find($id);
+     /////////////////add in purchases/////////////
      $Purchase=new Purchase();
     $Purchase->name=$notifi->product->name;
     $Purchase->price=$notifi->product->price;
     $Purchase->user_id=$notifi->buyer_id;
     $Purchase->description=$notifi->product->description;
     $Purchase->image=$notifi->product->image;
-
-       $Purchase->save();
+    $Purchase->save();
+        /////////////////add in sales/////////////
+    $sales=new Sales();
+    $sales->name=$notifi->product->name;
+    $sales->price=$notifi->product->price;
+    $sales->user_id=$notifi->seller_id;
+    $sales->description=$notifi->product->description;
+    $sales->image=$notifi->product->image;
+    $sales->save();
+    ////////////////////////////
      DB::table('favproducts')->where('product_id',$notifi->product->id)->delete();
      DB::table('notifications')->where('product_id',$notifi->product->id)->delete();
      return Product::destroy($notifi->product->id);
