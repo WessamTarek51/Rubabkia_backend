@@ -24,6 +24,7 @@ class UserResource extends JsonResource
             'password'=>auth()->user()->password,
             'products'=>auth()->user()->products,
             'purchases'=>auth()->user()->purchases,
+            'sales'=>auth()->user()->sales,
 
             // 'id'=>$this->id,
             // 'username'=>$this->name,
