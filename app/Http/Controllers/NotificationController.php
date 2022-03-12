@@ -45,6 +45,7 @@ class NotificationController extends Controller
         $noti->seller_id=$product->user_id;
         $noti->product_id=$product->id;
         $noti->save();
+        return response()->json(['status'=>1,'message'=>'message sent to the owner of product please wait','code'=>200]);
     }
 
     /**

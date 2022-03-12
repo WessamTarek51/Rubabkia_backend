@@ -33,7 +33,7 @@ class UserController extends Controller
                    'name' => 'required|string|max:255',
                    'email' => 'required|string|email|max:255',
                    'password' => 'required|string|min:8',
-                   'phone_number' => ' required|string|max:11',
+                   'phone_number' => ' required|digits:11',
                    'image'=>'required',
                    'address'=>'required|string',
               ]);
@@ -203,7 +203,7 @@ try{
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255',
                 'password' => 'required|string|min:8',
-                'phone_number' => 'required|string|max:11',
+                'phone_number' => 'required|digits:11',
                 'image'=>'required',
                 'address'=>'required|string',
            ]);
