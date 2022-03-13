@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\File;
  use App\Models\Favproduct;
 use App\Http\Resources\FavProductResource;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\detailsOfProduct;
 class ProductController extends Controller
 {
     /**
@@ -94,10 +95,10 @@ class ProductController extends Controller
 
     }
 
-    public function ShowDetailesProduct($id,Request $request)
+    public function ShowDetailesProduct($id)
     {
 
-        return new ShowproductResource(Product::find($id));
+        return new detailsOfProduct(Product::find($id));
 
     }
 
