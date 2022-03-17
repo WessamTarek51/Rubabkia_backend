@@ -13,6 +13,7 @@ use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\AcceptedmessageController;
 
 
 /*
@@ -102,7 +103,9 @@ Route::get('productid/{id}', [ProductController::class, 'ShowDetailesProduct'])-
 Route::post("/buy/{id}",[NotificationController::class,'store'])->middleware('auth:sanctum');
 Route::get("notification/{id}",[NotificationController::class,'notifay'])->middleware('auth:sanctum');
 
-
+Route::post("accept/{id}",[AcceptedmessageController::class,'store'])->middleware('auth:sanctum');
+Route::get("acceptedmessages",[AcceptedmessageController::class,'show'])->middleware('auth:sanctum');
+Route::delete("/acceptedmessages/{id}",[AcceptedmessageController::class,'destroy'])->middleware('auth:sanctum');
 
 
 // Route::post('/sanctum/token', function (Request $request) {
