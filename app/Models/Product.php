@@ -32,7 +32,10 @@ class Product extends Model
         return $this->hasMany(Notification::class);
     }
 
-
+    // public function acceptmessage()
+    // {
+    //     return $this->belongsTo(Acceptedmessage::class);
+    // }
 
 
     protected $fillable  = ["name", "price","description","user_id","category_id","image"];
