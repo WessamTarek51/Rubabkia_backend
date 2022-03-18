@@ -42,6 +42,7 @@ class FeedbackController extends Controller
        $feedback->seller_id=$seller->seller_id;
     //    return $feedback;
         $feedback->save();
+        return $feedback;
         
     //     return response()->json([
     //         'status'=>1,
