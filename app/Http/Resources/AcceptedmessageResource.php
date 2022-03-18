@@ -18,7 +18,7 @@ class AcceptedmessageResource extends JsonResource
         return [
             'id'=>$this->id,
             'buyer_id'=>$this->buyer_id,
-            'seller_id'=>$this->seller_id,
+            // 'seller_id'=>$this->seller_id,
             'seller_name'=>$user->name,
             'productimage'=>$this->productimage,
             'productname'=>$this->productname,
