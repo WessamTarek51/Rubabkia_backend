@@ -14,7 +14,7 @@ use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AcceptedmessageController;
-
+use App\Http\Controllers\RejectedmessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,6 +106,10 @@ Route::get("notification/{id}",[NotificationController::class,'notifay'])->middl
 Route::post("accept/{id}",[AcceptedmessageController::class,'store'])->middleware('auth:sanctum');
 Route::get("acceptedmessages",[AcceptedmessageController::class,'show'])->middleware('auth:sanctum');
 Route::delete("/acceptedmessages/{id}",[AcceptedmessageController::class,'destroy'])->middleware('auth:sanctum');
+
+Route::post("reject/{id}",[RejectedmessageController::class,'store'])->middleware('auth:sanctum');
+Route::get("rejectedmessages",[RejectedmessageController::class,'show'])->middleware('auth:sanctum');
+Route::delete("/rejectedmessages/{id}",[RejectedmessageController::class,'destroy'])->middleware('auth:sanctum');
 
 
 // Route::post('/sanctum/token', function (Request $request) {

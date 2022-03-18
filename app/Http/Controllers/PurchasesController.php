@@ -128,7 +128,7 @@ class PurchasesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   
         return Notification::destroy($id);
 
     }
