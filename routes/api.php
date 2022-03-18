@@ -33,14 +33,8 @@ use App\Http\Controllers\AcceptedmessageController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-// 1|aPvb1WCXBQ6JZsgTXSwurmtztSpkQuCSBrV40P4z
 
 
-// Route::get('users',function(Request $request){
-
-//     return User::all();
-// });
-// Route::resource('users',UserController::class);
 
 Route::get('users',[UserController::class,'index']);
 Route::get('users/{id}',[UserController::class,'show']);
@@ -72,8 +66,9 @@ Route::delete('favdelete/{id}',[ProductController::class,'favdelete'])->middlewa
 
 
 Route::get('categories',[CategoryController::class,'index']);
+Route::post('categories',[CategoryController::class,'store']);
 Route::get('categories/{id}',[CategoryController::class,'show']);
-Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middleware('auth:sanctum');
+// Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middleware('auth:sanctum');
 Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
 Route::post("/products",[ProductController::class,'store'])->middleware('auth:sanctum');

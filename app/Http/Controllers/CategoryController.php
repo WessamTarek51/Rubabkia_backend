@@ -40,7 +40,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $noti=new Category();
+        $noti->id=$request->id;
+        $noti->name=$request->name;
+        $noti->image=$request->image;
+        $noti->save();
     }
 
     /**
@@ -50,7 +54,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     
+
     public function show($id)
     {
         // return Category::find($id);

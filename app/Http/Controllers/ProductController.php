@@ -26,9 +26,9 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        // return Product::all();
-        $prosucts = Product::all();
-        return ProductResource::collection($prosucts);
+        $user = auth()->user()->id;
+        $product = Product::select ('*')->where('user_id','!=',$user)->get();
+        return ProductResource::collection($product);
     }
     public function productsWithOutLogin()
     {
