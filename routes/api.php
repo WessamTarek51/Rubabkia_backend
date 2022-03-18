@@ -14,7 +14,7 @@ use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AcceptedmessageController;
-
+use App\Http\Controllers\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +102,8 @@ Route::post("accept/{id}",[AcceptedmessageController::class,'store'])->middlewar
 Route::get("acceptedmessages",[AcceptedmessageController::class,'show'])->middleware('auth:sanctum');
 Route::delete("/acceptedmessages/{id}",[AcceptedmessageController::class,'destroy'])->middleware('auth:sanctum');
 
+
+Route::post("feedbacks/{id}",[FeedbackController::class,'store'])->middleware('auth:sanctum');
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([
