@@ -104,6 +104,7 @@ Route::delete("/acceptedmessages/{id}",[AcceptedmessageController::class,'destro
 
 
 Route::post("feedbacks/{id}",[FeedbackController::class,'store'])->middleware('auth:sanctum');
+Route::get("feedbacksdata/{id}",[FeedbackController::class,'index'])->middleware('auth:sanctum');
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([

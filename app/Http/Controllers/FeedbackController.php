@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Feedback;
 use App\Models\Acceptedmessage;
+use App\Http\Resources\FeedbackResource;
 class FeedbackController extends Controller
 {
     /**
@@ -12,9 +13,12 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $feedback = Feedback::select('*')->where('seller_id',$id)->get();
+
+
+        return FeedbackResource::collection($feedback);
     }
 
     /**
