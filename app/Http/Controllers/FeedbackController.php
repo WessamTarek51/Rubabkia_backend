@@ -43,6 +43,7 @@ class FeedbackController extends Controller
         $feedback->message=$request->message;
        $feedback->buyer_id=auth()->user()->id;
        $seller=Acceptedmessage::select('seller_id')->where('id',$id)->first();
+       $feedback->rate=$request->rate;
        $feedback->seller_id=$seller->seller_id;
     //    return $feedback;
         $feedback->save();

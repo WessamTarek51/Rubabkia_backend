@@ -23,7 +23,8 @@ class FeedbackResource extends JsonResource
             'buyer_name'=>$user->name,
             'image'=>$image->image,
             // 'productname'=>$this->productname,
-            'message'=>$this->message
+            'message'=>$this->message,
+            'rate'=>$this->rate
 
         ];
     
