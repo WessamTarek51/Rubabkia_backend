@@ -80,4 +80,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Feedback::class);
     }
 
+    public function rejectmessage()
+    {
+        return $this->hasMany(Rejectedmessage::class);
+    }
+
 }
