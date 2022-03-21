@@ -3,23 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Http\Resources\CtegoryResource;
-
-
-class CategoryController extends Controller
+use App\Models\Feedback;
+use App\Models\Acceptedmessage;
+use App\Http\Resources\FeedbackResource;
+class FeedbackController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        // return Category::all();
-        $categories = Category::all();
-        return CtegoryResource::collection($categories);
-        
+        $feedback = Feedback::select('*')->where('seller_id',$id)->get();
+
+
+        return FeedbackResource::collection($feedback);
     }
 
     /**
@@ -38,13 +37,25 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $noti=new Category();
-        $noti->id=$request->id;
-        $noti->name=$request->name;
-        $noti->image=$request->image;
-        $noti->save();
+        $feedback=new Feedback();
+        $feedback->message=$request->message;
+       $feedback->buyer_id=auth()->user()->id;
+       $seller=Acceptedmessage::select('seller_id')->where('id',$id)->first();
+       $feedback->rate=$request->rate;
+       $feedback->seller_id=$seller->seller_id;
+    //    return $feedback;
+        $feedback->save();
+        return $feedback;
+        
+    //     return response()->json([
+    //         'status'=>1,
+    //         'message'=>'feedbaaack  sent',
+    //         'code'=>200
+    //  ]);
+        //  return 'ok';
+
     }
 
     /**
@@ -53,19 +64,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-
     public function show($id)
     {
-        // return Category::find($id);
-        $categories = Category::find($id);
-        if($categories){
-        return new CtegoryResource($categories);
-        }else{
-        return "no data to this category";
-        }
-        
-        
+        //
     }
 
     /**
@@ -99,7 +100,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        return Category::destroy($id);
-        
+        //
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use  App\Models\Purchase;
 use  App\Models\Product;
 use  App\Models\Sales;
+use  App\Models\Acceptedmessage;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePurchasesRequest;
 use App\Http\Resources\PurchasesResource;
@@ -58,11 +59,31 @@ class PurchasesController extends Controller
     $sales->description=$notifi->product->description;
     $sales->image=$notifi->product->image;
     $sales->save();
-    ////////////////////////////
+   
+    //////////////////////////// send accept message
+    $notifi= Notification::find($id);
+    $buyer_id=Notification::select('buyer_id')->where('id',$id)->first();
+    $product_id=Notification::select('product_id')->where('id',$id)->first();
+    $product_name=Product::select('name')->where('id',$product_id->product_id)->first();
+    $product_image=Product::select('image')->where('id',$product_id->product_id)->first();
+    $msg=new Acceptedmessage();
+    $msg->seller_id=auth()->user()->id;
+    $msg->buyer_id=$buyer_id->buyer_id;
+    
+    $msg->productname=$product_name->name;
+    $msg->productimage=$product_image->image;
+    $msg->message="Congratulations product become yours enjoy!";
+    $msg->save();
+    
+
+    ////////////////////////////delete product
      DB::table('favproducts')->where('product_id',$notifi->product->id)->delete();
      DB::table('notifications')->where('product_id',$notifi->product->id)->delete();
      return Product::destroy($notifi->product->id);
+     return response()->json(['status'=>1,'message'=>'message sent','code'=>200,'data'=>$msg]);
      return 'purchases ok';
+
+
 
     }
 
@@ -107,7 +128,7 @@ class PurchasesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   
         return Notification::destroy($id);
 
     }

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Http\Resources\CtegoryResource;
-
-
-class CategoryController extends Controller
+use App\Models\Notification;
+use App\Models\Acceptedmessage;
+use App\Http\Resources\AcceptedmessageResource;
+class AcceptedmessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // return Category::all();
-        $categories = Category::all();
-        return CtegoryResource::collection($categories);
-        
+        //
     }
 
     /**
@@ -38,13 +34,21 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        $noti=new Category();
-        $noti->id=$request->id;
-        $noti->name=$request->name;
-        $noti->image=$request->image;
-        $noti->save();
+        // $notifi= Notification::find($id);
+        // $buyer_id=Notification::select('buyer_id')->where('id',$id)->first();
+        // $product_id=Notification::select('product_id')->where('id',$id)->first();
+        // $product_name=Product::select('name')->where('id',$product_id)->first();
+        // $product_image=Product::select('image')->where('id',$product_id)->first();
+        // $msg=new Acceptedmessage();
+        // $msg->seller_id=auth()->user()->id;
+        // $msg->buyer_id=$buyer_id->buyer_id;
+        // $msg->productname=$product_name;
+        // $msg->productimage=$product_image;
+        // $msg->message="Congratulations product become yours enjoy!";
+        // $msg->save();
+        // return response()->json(['status'=>1,'message'=>'message sent','code'=>200,'data'=>$msg]);
     }
 
     /**
@@ -53,19 +57,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-
-    public function show($id)
+    public function show()
     {
-        // return Category::find($id);
-        $categories = Category::find($id);
-        if($categories){
-        return new CtegoryResource($categories);
-        }else{
-        return "no data to this category";
-        }
-        
-        
+        $buyer = auth()->user()->id;
+        $product = Acceptedmessage::select ('*')->where('buyer_id',$buyer)->get();
+        return  AcceptedmessageResource::collection($product);
     }
 
     /**
@@ -99,7 +95,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        return Category::destroy($id);
-        
+        return Acceptedmessage::destroy($id);
     }
 }

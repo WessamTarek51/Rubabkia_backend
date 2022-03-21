@@ -4,8 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\User;
-
-class NotificationResource extends JsonResource
+class FeedbackResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,19 +15,18 @@ class NotificationResource extends JsonResource
     public function toArray($request)
     {
         $user=User::select('name')->where('id',$this->buyer_id)->first();
+        $image=User::select('image')->where('id',$this->buyer_id)->first();
         return [
-            'id_not'=>$this->id,
+            'id'=>$this->id,
             'buyer_id'=>$this->buyer_id,
+            'seller_id'=>$this->seller_id,
             'buyer_name'=>$user->name,
-            'image'=>$this->product->image,
-            'price'=>$this->product->price,
-            'description'=>$this->product->description,
-            'name'=>$this->product->name,
-            'product_id'=>$this->product->id,
+            'image'=>$image->image,
+            // 'productname'=>$this->productname,
+            'message'=>$this->message,
+            'rate'=>$this->rate
 
-
-            // 'name'=>$this->buyer->name,
-            // 'id'=>auth()->user->buyer_id,
         ];
+    
     }
 }
