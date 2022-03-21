@@ -52,7 +52,7 @@ class UserController extends Controller
             $imagename=pathinfo($completeimagename,PATHINFO_FILENAME);
             $extension=$request->file('image')->getClientOriginalExtension();
             $compic=str_replace(' ','_',$imagename).'-'.rand().'_'.time().'.'.$extension;
-            $path=$request->file('image')->storeAs('public/images',$compic);
+            $path=$request->file('image')->move('public/images',$compic);
         }
       $user = User::create([
                    'name' => $validatedData['name'],
@@ -213,7 +213,7 @@ try{
             $imagename=pathinfo($completeimagename,PATHINFO_FILENAME);
             $extension=$request->file('image')->getClientOriginalExtension();
             $compic=str_replace(' ','_',$imagename).'-'.rand().'_'.time().'.'.$extension;
-            $path=$request->file('image')->storeAs('public/images',$compic);
+            $path=$request->file('image')->move('public/images',$compic);
         }
 
                $user=User::find($request->user()->id);
