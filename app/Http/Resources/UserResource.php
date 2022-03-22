@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'image'=>auth()->user()->image,
             'email'=>auth()->user()->email,
             'phoneNumber'=>auth()->user()->phone_number,
+            'governorate_name'=>auth()->user()->governorate->name,
             'address'=>auth()->user()->address,
             'password'=>auth()->user()->password,
             'products'=>auth()->user()->products,

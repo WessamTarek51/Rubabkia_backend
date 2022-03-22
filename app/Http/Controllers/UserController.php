@@ -36,6 +36,7 @@ class UserController extends Controller
                    'phone_number' => ' required|digits:11',
                    'image'=>'required',
                    'address'=>'required|string',
+                   'governorate_id'=>'required'
               ]);
      $user = User::where('email', $request['email'])->first();
      if($user){
@@ -61,6 +62,7 @@ class UserController extends Controller
                    'address'=>$validatedData['address'],
                    'image'=>$compic,
                    'password' => Hash::make($validatedData['password']),
+                   'governorate_id'=>$validatedData['governorate_id'],
        ]);
 
 
@@ -222,6 +224,7 @@ try{
                $user->address = $request->address;
                $user->password = Hash::make($request->password);
                $user->phone_number = $request->phone_number;
+               $user->governorate_id=$request->governorate_id;
                $user->image = $compic;
                $user->update();
             return response()->json(['status'=>1,'message'=>'profile updated','code'=>200,'data'=>$user]);
