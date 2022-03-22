@@ -36,6 +36,7 @@ class UserController extends Controller
                    'phone_number' => ' required|digits:11',
                    'image'=>'required',
                    'address'=>'required|string',
+                   'gender'=>'required',
                    'governorate_id'=>'required'
               ]);
      $user = User::where('email', $request['email'])->first();
@@ -63,6 +64,7 @@ class UserController extends Controller
                    'image'=>$compic,
                    'password' => Hash::make($validatedData['password']),
                    'governorate_id'=>$validatedData['governorate_id'],
+                   'gender'=>$validatedData['gender'],
        ]);
 
 
@@ -208,6 +210,7 @@ try{
                 'phone_number' => 'required|digits:11',
                 'image'=>'required',
                 'address'=>'required|string',
+                'gender'=>'required'
            ]);
            if($request->hasFile('image')){
 
@@ -226,6 +229,7 @@ try{
                $user->phone_number = $request->phone_number;
                $user->governorate_id=$request->governorate_id;
                $user->image = $compic;
+               $user->gender=$request->gender;
                $user->update();
             return response()->json(['status'=>1,'message'=>'profile updated','code'=>200,'data'=>$user]);
 

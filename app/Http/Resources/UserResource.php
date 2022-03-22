@@ -21,6 +21,8 @@ class UserResource extends JsonResource
             'email'=>auth()->user()->email,
             'phoneNumber'=>auth()->user()->phone_number,
             'governorate_name'=>auth()->user()->governorate->name,
+            'governorate_id'=>auth()->user()->governorate->id,
+            'gender'=>auth()->user()->gender,
             'address'=>auth()->user()->address,
             'password'=>auth()->user()->password,
             'products'=>auth()->user()->products,
