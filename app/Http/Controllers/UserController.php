@@ -65,6 +65,7 @@ class UserController extends Controller
                    'password' => Hash::make($validatedData['password']),
                    'governorate_id'=>$validatedData['governorate_id'],
                    'gender'=>$validatedData['gender'],
+                   'is_admin'=>$request->is_admin
        ]);
 
 
@@ -102,6 +103,7 @@ class UserController extends Controller
                      'code'=>200,
                      'id'=>auth()->user()->id,
                      'name'=>auth()->user()->name,
+                     'is_admin'=>auth()->user()->is_admin
 
           ]);
           }
