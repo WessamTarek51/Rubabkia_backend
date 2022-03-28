@@ -2,6 +2,7 @@
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\Governorate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AcceptedmessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RejectedmessageController;
+use App\Http\Controllers\GovernorateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,6 +112,8 @@ Route::delete("/rejectedmessages/{id}",[RejectedmessageController::class,'destro
 
 Route::post("feedbacks/{id}",[FeedbackController::class,'store'])->middleware('auth:sanctum');
 Route::get("feedbacksdata/{id}",[FeedbackController::class,'index']);
+Route::get('governorates',[GovernorateController::class,'index']);
+Route::post('governorates',[GovernorateController::class,'store']);
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([

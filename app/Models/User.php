@@ -25,7 +25,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number',
         'address',
         'image',
-        'gender'
+        'gender',
+        'governorate_id',
+        'is_admin'
     ];
 
     /**
@@ -83,6 +85,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function rejectmessage()
     {
         return $this->hasMany(Rejectedmessage::class);
+    }
+
+    public function governorate()
+    {
+        return $this->belongsTo(Governorate::class);
     }
 
 }
