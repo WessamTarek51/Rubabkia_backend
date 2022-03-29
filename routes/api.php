@@ -39,10 +39,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::get('users',[UserController::class,'index']);
+Route::get('users',[UserController::class,'index'])->middleware('auth:sanctum');
 Route::get('users/{id}',[UserController::class,'show']);
 Route::get('user/{id}',[UserController::class,'UserByID']);
-Route::delete('users/{id}',[UserController::class,'destroy']);
+Route::delete('users/{id}',[UserController::class,'destroy'])->middleware('auth:sanctum');
 Route::post('userbyId',[UserController::class,'getuserbyID']);
 Route::post('editProfile',[UserController::class,'editProfile'])->middleware('auth:sanctum');
 Route::get('like/{id}',[UserController::class,'like'])->middleware('auth:sanctum');
@@ -112,6 +112,7 @@ Route::delete("/rejectedmessages/{id}",[RejectedmessageController::class,'destro
 
 Route::post("feedbacks/{id}",[FeedbackController::class,'store'])->middleware('auth:sanctum');
 Route::get("feedbacksdata/{id}",[FeedbackController::class,'index']);
+// Route::get("feedbacksdata",[FeedbackController::class,'getall']);
 Route::get('governorates',[GovernorateController::class,'index']);
 Route::post('governorates',[GovernorateController::class,'store']);
 

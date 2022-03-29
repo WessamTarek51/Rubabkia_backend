@@ -21,6 +21,11 @@ class FeedbackController extends Controller
         return FeedbackResource::collection($feedback);
     }
 
+    // public function getall(){
+    //     $users = User::all();
+    //     return FeedbackResource::collection($feedbacks);
+    // }
+
     /**
      * Show the form for creating a new resource.
      *

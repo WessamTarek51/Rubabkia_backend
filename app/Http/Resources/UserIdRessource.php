@@ -18,6 +18,7 @@ class UserIdRessource extends JsonResource
             'id'=>$this->id,
             'username'=>$this->name,
             'image'=>$this->image,
+            'email'=>$this->email,
             'phoneNumber'=>$this->phone_number,
             'address'=>$this->address,
              'products'=>$this->products
