@@ -74,9 +74,22 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
-        //
+        $category = Category::find($id);
+        if(is_null($category)){
+                  return response()->json(['message' => 'Not Found'],404);
+        }
+        else{
+
+            $category->id=$request->id;
+            $category->name=$request->name;
+            $category->image=$request->image;
+                  
+
+            $category->update();
+            return $category;
+ }
     }
 
     /**
