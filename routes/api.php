@@ -18,7 +18,8 @@ use App\Http\Controllers\AcceptedmessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RejectedmessageController;
 use App\Http\Controllers\GovernorateController;
-
+use App\Http\Controllers\UsermessageController;
+use App\Http\Controllers\AdminmessageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -115,22 +116,6 @@ Route::get("feedbacksdata/{id}",[FeedbackController::class,'index']);
 // Route::get("feedbacksdata",[FeedbackController::class,'getall']);
 Route::get('governorates',[GovernorateController::class,'index']);
 Route::post('governorates',[GovernorateController::class,'store']);
-
-// Route::post('/sanctum/token', function (Request $request) {
-//     $request->validate([
-//         'email' => 'required|email',
-//         'password' => 'required',
-//         'device_name' => 'required',
-//     ]);
-
-//     $user = User::where('email', $request->email)->first();
-
-//     if (! $user || ! Hash::check($request->password, $user->password)) {
-//         throw ValidationException::withMessages([
-//             'email' => ['The provided credentials are incorrect.'],
-//         ]);
-//     }
-
-//     return $user->createToken($request->device_name)->plainTextToken;
-// });
-
+Route::post("usermessages",[UsermessageController::class,'store'])->middleware('auth:sanctum');
+Route::get("usermessages",[UsermessageController::class,'index'])->middleware('auth:sanctum');;
+Route::post("adminmessages/{id}",[AdminmessageController::class,'store'])->middleware('auth:sanctum');
