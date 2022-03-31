@@ -115,6 +115,9 @@ Route::post("feedbacks/{id}",[FeedbackController::class,'store'])->middleware('a
 Route::get("feedbacksdata/{id}",[FeedbackController::class,'index']);
 Route::get('governorates',[GovernorateController::class,'index']);
 Route::post('governorates',[GovernorateController::class,'store']);
+Route::get("feedbacks",[FeedbackController::class,'allfeeds']);
+Route::delete('feedbacks/{id}',[FeedbackController::class,'destroy']);
+Route::get('users',[UserController::class,'users']);
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([
