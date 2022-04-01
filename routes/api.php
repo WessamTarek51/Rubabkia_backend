@@ -18,6 +18,8 @@ use App\Http\Controllers\AcceptedmessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RejectedmessageController;
 use App\Http\Controllers\GovernorateController;
+use App\Http\Controllers\ReplayController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -118,6 +120,11 @@ Route::post('governorates',[GovernorateController::class,'store']);
 Route::get("feedbacks",[FeedbackController::class,'allfeeds']);
 Route::delete('feedbacks/{id}',[FeedbackController::class,'destroy']);
 Route::get('users',[UserController::class,'users']);
+
+
+
+Route::post("replays/{id}",[ReplayController::class,'store'])->middleware('auth:sanctum');
+Route::get("replayss/{id}",[ReplayController::class,'index']);
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([
