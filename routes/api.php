@@ -69,9 +69,10 @@ Route::delete('favdelete/{id}',[ProductController::class,'favdelete'])->middlewa
 
 
 Route::get('categories',[CategoryController::class,'index']);
-Route::post('categories',[CategoryController::class,'store']);
+Route::post('categoriess',[CategoryController::class,'store']);
 Route::get('categories/{id}',[CategoryController::class,'show']);
 // Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middleware('auth:sanctum');
+Route::post("editcat/{id}",[CategoryController::class,'edit']);
 Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
 Route::post("/products",[ProductController::class,'store'])->middleware('auth:sanctum');
@@ -114,6 +115,9 @@ Route::post("feedbacks/{id}",[FeedbackController::class,'store'])->middleware('a
 Route::get("feedbacksdata/{id}",[FeedbackController::class,'index']);
 Route::get('governorates',[GovernorateController::class,'index']);
 Route::post('governorates',[GovernorateController::class,'store']);
+Route::get("feedbacks",[FeedbackController::class,'allfeeds']);
+Route::delete('feedbacks/{id}',[FeedbackController::class,'destroy']);
+Route::get('users',[UserController::class,'users']);
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([

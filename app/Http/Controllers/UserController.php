@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UsersResource;
 
 use PhpParser\Node\Stmt\Catch_;
 use SebastianBergmann\Environment\Console;
@@ -274,6 +275,14 @@ try{
            return "false";
        }
 
+    }
+
+
+    public function users()
+    {
+        // return Product::all();
+        $userss = User::all();
+        return UsersResource::collection($userss);
     }
 }
 

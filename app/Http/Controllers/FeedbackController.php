@@ -21,6 +21,15 @@ class FeedbackController extends Controller
         return FeedbackResource::collection($feedback);
     }
 
+
+    public function allfeeds()
+    {
+        // return Category::all();
+        $feedbacks = Feedback::all();
+        return FeedbackResource::collection($feedbacks);
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -100,6 +109,6 @@ class FeedbackController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Feedback::destroy($id);
     }
 }
