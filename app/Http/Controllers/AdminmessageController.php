@@ -27,4 +27,10 @@ class AdminmessageController extends Controller
             $admin = Adminmessage::select('*')->where('user_id',auth()->user()->id)->get();
             return AdminmessageResource::collection($admin);
         }
+        public function destroy($id)
+        {
+            
+        return Adminmessage::destroy($id);
+    
+        }
 }

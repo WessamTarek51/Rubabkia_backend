@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
-
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdminmessageResource extends JsonResource
@@ -14,6 +14,13 @@ class AdminmessageResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $admin=User::select('name')->where('id',$this->admin_id)->first();
+        return [
+            'id'=>$this->id,
+            'user_id'=>auth()->user()->id,
+            'admin_id'=>$this->admin_id,
+            'name'=>$admin->name,
+             'message'=>$this->message,
+            ];
     }
 }
