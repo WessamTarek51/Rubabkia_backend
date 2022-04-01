@@ -16,6 +16,7 @@ class FeedbackResource extends JsonResource
     {
         $user=User::select('name')->where('id',$this->buyer_id)->first();
         $seller=User::select('name')->where('id',$this->seller_id)->first();
+        $sellerimage=User::select('image')->where('id',$this->seller_id)->first();
         $image=User::select('image')->where('id',$this->buyer_id)->first();
         return [
             'id'=>$this->id,
@@ -26,9 +27,11 @@ class FeedbackResource extends JsonResource
             'image'=>$image->image,
             // 'productname'=>$this->productname,
             'message'=>$this->message,
-            'rate'=>$this->rate
+            'rate'=>$this->rate,
+            'seller_name'=>$seller->name,
+            'seller_image'=>$sellerimage->image
 
         ];
-    
+
     }
 }
