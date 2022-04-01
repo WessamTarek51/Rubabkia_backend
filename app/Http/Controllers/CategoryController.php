@@ -19,7 +19,7 @@ class CategoryController extends Controller
         // return Category::all();
         $categories = Category::all();
         return CtegoryResource::collection($categories);
-        
+
     }
 
     /**
@@ -41,7 +41,6 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $noti=new Category();
-        $noti->id=$request->id;
         $noti->name=$request->name;
         $noti->image=$request->image;
         $noti->save();
@@ -64,8 +63,8 @@ class CategoryController extends Controller
         }else{
         return "no data to this category";
         }
-        
-        
+
+
     }
 
     /**
@@ -85,7 +84,7 @@ class CategoryController extends Controller
             $category->id=$request->id;
             $category->name=$request->name;
             $category->image=$request->image;
-                  
+
 
             $category->update();
             return $category;
@@ -113,6 +112,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         return Category::destroy($id);
-        
+
     }
 }
