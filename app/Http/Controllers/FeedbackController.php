@@ -22,13 +22,18 @@ class FeedbackController extends Controller
     }
 
 
+
     public function allfeeds()
     {
         // return Category::all();
         $feedbacks = Feedback::all();
         return FeedbackResource::collection($feedbacks);
-        
+
     }
+    // public function getall(){
+    //     $users = User::all();
+    //     return FeedbackResource::collection($feedbacks);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -57,7 +62,7 @@ class FeedbackController extends Controller
     //    return $feedback;
         $feedback->save();
         return $feedback;
-        
+
     //     return response()->json([
     //         'status'=>1,
     //         'message'=>'feedbaaack  sent',

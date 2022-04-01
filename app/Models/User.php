@@ -96,4 +96,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Governorate::class);
     }
 
+    public function usermessage()
+    {
+        return $this->hasMany(Usermessage::class);
+    }
+
+    public function adminmessage()
+    {
+        return $this->hasMany(Adminmessage::class);
+    }
+
 }
