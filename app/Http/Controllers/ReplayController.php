@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Feedback;
 use App\Models\Replay;
 use App\Http\Resources\ReplayResource;
+use App\Http\Resources\FeedbackResource;
 
 class ReplayController extends Controller
 {
@@ -14,12 +15,13 @@ class ReplayController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Request $request)
     {
-        $replays = Replay::select('*')->where('buyer_id',$id)->get();
+        $seller = auth()->user()->id;
+        $replays = Feedback::select('*')->where('seller_id',$seller)->get();
 
 
-        return ReplayResource::collection($replays);
+        return FeedbackResource::collection($replays);
     }
 
     /**

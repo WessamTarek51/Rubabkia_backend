@@ -15,11 +15,13 @@ class AcceptedmessageResource extends JsonResource
     public function toArray($request)
     {
         $user=User::select('name')->where('id',$this->seller_id)->first();
+        $buyer=User::select('name')->where('id',$this->buyer_id)->first();
         return [
             'id'=>$this->id,
             'buyer_id'=>$this->buyer_id,
             'seller_id'=>$this->seller_id,
             'seller_name'=>$user->name,
+            'buyer_name'=>$buyer->name,
             'productimage'=>$this->productimage,
             'productname'=>$this->productname,
             'message'=>$this->message

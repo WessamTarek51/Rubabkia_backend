@@ -15,7 +15,8 @@ class AcceptedmessageController extends Controller
      */
     public function index()
     {
-        //
+        $feedbacks = Acceptedmessage::all();
+        return AcceptedmessageResource::collection($feedbacks);
     }
 
     /**

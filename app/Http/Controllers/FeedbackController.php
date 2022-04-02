@@ -21,8 +21,15 @@ class FeedbackController extends Controller
         return FeedbackResource::collection($feedback);
     }
 
+    public function feeduser(Request $request,$id)
+    {
+        $seller = auth()->user()->id;
+        $replays = Feedback::select('*')->where('seller_id',$id)->get();
 
 
+        return FeedbackResource::collection($replays);
+    }
+    
     public function allfeeds()
     {
         // return Category::all();

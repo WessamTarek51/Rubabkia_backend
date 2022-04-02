@@ -60,6 +60,7 @@ Route::get('showlike/{id}',[ProductController::class,'showlikeproduct'])->middle
 
 
 Route::get('products',[ProductController::class,'index'])->middleware('auth:sanctum');
+Route::get('sales',[ProductController::class,'sale']);
 Route::get('productsWithOutLogin',[ProductController::class,'productsWithOutLogin']);
 
 // Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
@@ -109,6 +110,7 @@ Route::get("notification/{id}",[NotificationController::class,'notifay'])->middl
 
 Route::post("accept/{id}",[AcceptedmessageController::class,'store'])->middleware('auth:sanctum');
 Route::get("acceptedmessages",[AcceptedmessageController::class,'show'])->middleware('auth:sanctum');
+Route::get("acceptedmes",[AcceptedmessageController::class,'index'])->middleware('auth:sanctum');
 Route::delete("/acceptedmessages/{id}",[AcceptedmessageController::class,'destroy'])->middleware('auth:sanctum');
 
 Route::post("reject/{id}",[RejectedmessageController::class,'store'])->middleware('auth:sanctum');
@@ -128,7 +130,7 @@ Route::get('users',[UserController::class,'users']);
 
 
 Route::post("replays/{id}",[ReplayController::class,'store'])->middleware('auth:sanctum');
-Route::get("replayss/{id}",[ReplayController::class,'index']);
+Route::get("replayss/{id}",[FeedbackController::class,'feeduser'])->middleware('auth:sanctum');
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([
