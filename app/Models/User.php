@@ -81,6 +81,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Feedback::class);
     }
+    public function replay()
+    {
+        return $this->hasMany(Replay::class);
+    }
 
     public function rejectmessage()
     {

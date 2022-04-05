@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGovernoratesTable extends Migration
+class AddSellerIdToReplaysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateGovernoratesTable extends Migration
      */
     public function up()
     {
-        Schema::create('governorates', function (Blueprint $table) {
-            $table->id();
-            $table->string('message');
-            // $table->string('name');
-            $table->timestamps();
+        Schema::table('replays', function (Blueprint $table) {
+            $table->unsignedBigInteger('seller_id');
+            $table->foreign('seller_id')->references('id')->on('users');
         });
     }
 
@@ -28,6 +26,8 @@ class CreateGovernoratesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('governorates');
+        Schema::table('replays', function (Blueprint $table) {
+            //
+        });
     }
 }
