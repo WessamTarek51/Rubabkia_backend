@@ -36,7 +36,7 @@ class GovernorateController extends Controller
     public function store(Request $request)
     {
         $gover=new Governorate();
-        // $gover->id=$request->id;
+        $gover->id=$request->id;
         $gover->name=$request->name;
         $gover->save();
     }
