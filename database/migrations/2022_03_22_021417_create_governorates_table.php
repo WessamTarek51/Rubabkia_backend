@@ -15,8 +15,8 @@ class CreateGovernoratesTable extends Migration
     {
         Schema::create('governorates', function (Blueprint $table) {
             $table->id();
-            $table->string('message');
-            // $table->string('name');
+            // $table->string('message');
+            $table->string('name');
             $table->timestamps();
         });
     }
