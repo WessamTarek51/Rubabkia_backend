@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UsersResource;
 
+use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Catch_;
 use SebastianBergmann\Environment\Console;
 use App\Http\Resources\UserIdRessource;
@@ -124,6 +126,9 @@ class UserController extends Controller
 
     public function index()
     {
+        // $users = User::all()->except($currentUser->id);
+        $users = User::select("*")->where('is_admin',null)->get();
+        return UserIdRessource::collection($users);
     }
 
     /**
@@ -194,13 +199,17 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+    //    return User::destroy($id);
+    DB::table('feedbacks')->where('buyer_id',$id)->delete();
+    DB::table('feedbacks')->where('seller_id',$id)->delete();
+    DB::table('purchases')->where('user_id',$id)->delete();
+    DB::table('sales')->where('user_id',$id)->delete();
+    DB::table('users')->where('id',$id)->delete();
     }
 
     public function hello($id)
     {
         return new UserResource(User::find($id));
-
  }
 
     public function editProfile(Request $request){
@@ -274,6 +283,14 @@ try{
            return "false";
        }
 
+    }
+
+
+    public function users()
+    {
+        // return Product::all();
+        $userss = User::all();
+        return UsersResource::collection($userss);
     }
 }
 

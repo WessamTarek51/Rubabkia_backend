@@ -27,6 +27,7 @@ class ProductResource extends JsonResource
             'description'=>$this->description,
             'category'=>$this->category_id,
             'user_id'=>$this->user_id,
+            'governate'=>$this->user->governorate->name,
             'isFav'=>Favorite::where('user_id',auth()->user()==null?-1:auth()->user()->id)->where('product_id',$this->id)->exists()
 
 

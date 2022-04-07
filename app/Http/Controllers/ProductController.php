@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Sales;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ShowproductResource;
@@ -15,6 +16,7 @@ use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Facades\File;
  use App\Models\Favproduct;
 use App\Http\Resources\FavProductResource;
+use App\Http\Resources\SalesResources;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\detailsOfProduct;
 class ProductController extends Controller
@@ -182,6 +184,16 @@ class ProductController extends Controller
 
 
         return ProductResource::collection($id);
+
+                    // return $id;
+        // $prosucts = Product::all();
+    }
+    public function sale()
+    {
+        $id = Sales::all();
+
+
+        return SalesResources::collection($id);
 
                     // return $id;
         // $prosucts = Product::all();

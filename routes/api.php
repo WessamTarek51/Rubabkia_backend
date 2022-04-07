@@ -19,6 +19,11 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RejectedmessageController;
 use App\Http\Controllers\GovernorateController;
 
+use App\Http\Controllers\ReplayController;
+
+use App\Http\Controllers\UsermessageController;
+use App\Http\Controllers\AdminmessageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,10 +44,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::get('users',[UserController::class,'index']);
+Route::get('users',[UserController::class,'index'])->middleware('auth:sanctum');
 Route::get('users/{id}',[UserController::class,'show']);
 Route::get('user/{id}',[UserController::class,'UserByID']);
-Route::delete('users/{id}',[UserController::class,'destroy']);
+Route::delete('users/{id}',[UserController::class,'destroy'])->middleware('auth:sanctum');
 Route::post('userbyId',[UserController::class,'getuserbyID']);
 Route::post('editProfile',[UserController::class,'editProfile'])->middleware('auth:sanctum');
 Route::get('like/{id}',[UserController::class,'like'])->middleware('auth:sanctum');
@@ -55,6 +60,7 @@ Route::get('showlike/{id}',[ProductController::class,'showlikeproduct'])->middle
 
 
 Route::get('products',[ProductController::class,'index'])->middleware('auth:sanctum');
+Route::get('sales',[ProductController::class,'sale']);
 Route::get('productsWithOutLogin',[ProductController::class,'productsWithOutLogin']);
 
 // Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
@@ -69,9 +75,10 @@ Route::delete('favdelete/{id}',[ProductController::class,'favdelete'])->middlewa
 
 
 Route::get('categories',[CategoryController::class,'index']);
-Route::post('categories',[CategoryController::class,'store']);
+Route::post('categoriess',[CategoryController::class,'store']);
 Route::get('categories/{id}',[CategoryController::class,'show']);
 // Route::delete('categories/{id}',[CategoryController::class,'destroy'])->middleware('auth:sanctum');
+Route::post("editcat/{id}",[CategoryController::class,'edit']);
 Route::delete('categories/{id}',[CategoryController::class,'destroy']);
 
 Route::post("/products",[ProductController::class,'store'])->middleware('auth:sanctum');
@@ -103,6 +110,7 @@ Route::get("notification/{id}",[NotificationController::class,'notifay'])->middl
 
 Route::post("accept/{id}",[AcceptedmessageController::class,'store'])->middleware('auth:sanctum');
 Route::get("acceptedmessages",[AcceptedmessageController::class,'show'])->middleware('auth:sanctum');
+Route::get("acceptedmes",[AcceptedmessageController::class,'index'])->middleware('auth:sanctum');
 Route::delete("/acceptedmessages/{id}",[AcceptedmessageController::class,'destroy'])->middleware('auth:sanctum');
 
 Route::post("reject/{id}",[RejectedmessageController::class,'store'])->middleware('auth:sanctum');
@@ -112,8 +120,17 @@ Route::delete("/rejectedmessages/{id}",[RejectedmessageController::class,'destro
 
 Route::post("feedbacks/{id}",[FeedbackController::class,'store'])->middleware('auth:sanctum');
 Route::get("feedbacksdata/{id}",[FeedbackController::class,'index']);
+// Route::get("feedbacksdata",[FeedbackController::class,'getall']);
 Route::get('governorates',[GovernorateController::class,'index']);
 Route::post('governorates',[GovernorateController::class,'store']);
+Route::get("feedbacks",[FeedbackController::class,'allfeeds']);
+Route::delete('feedbacks/{id}',[FeedbackController::class,'destroy']);
+Route::get('users',[UserController::class,'users']);
+
+
+
+Route::post("replays/{id}",[ReplayController::class,'store'])->middleware('auth:sanctum');
+Route::get("replayss/{id}",[FeedbackController::class,'feeduser'])->middleware('auth:sanctum');
 
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([
@@ -133,3 +150,9 @@ Route::post('governorates',[GovernorateController::class,'store']);
 //     return $user->createToken($request->device_name)->plainTextToken;
 // });
 
+Route::post("usermessages",[UsermessageController::class,'store'])->middleware('auth:sanctum');
+Route::get("usermessages",[UsermessageController::class,'index'])->middleware('auth:sanctum');
+Route::post("adminmessages/{id}",[AdminmessageController::class,'store'])->middleware('auth:sanctum');
+Route::get("adminmessages",[AdminmessageController::class,'index'])->middleware('auth:sanctum');
+Route::delete("adminmessages/{id}",[AdminmessageController::class,'destroy'])->middleware('auth:sanctum');
+Route::delete("usermessages/{id}",[UsermessageController::class,'destroy'])->middleware('auth:sanctum');

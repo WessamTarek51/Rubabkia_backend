@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Http\Resources\CtegoryResource;
+use App\Models\Feedback;
+use App\Models\Replay;
+use App\Http\Resources\ReplayResource;
+use App\Http\Resources\FeedbackResource;
 
-
-class CategoryController extends Controller
+class ReplayController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // return Category::all();
-        $categories = Category::all();
-        return CtegoryResource::collection($categories);
+        $seller = auth()->user()->id;
+        $replays = Feedback::select('*')->where('seller_id',$seller)->get();
 
+
+        return FeedbackResource::collection($replays);
     }
 
     /**
@@ -38,12 +40,15 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $noti=new Category();
-        $noti->name=$request->name;
-        $noti->image=$request->image;
-        $noti->save();
+        $replay=new Replay();
+        $replay->message=$request->message;
+        $replay->seller_id=auth()->user()->id;
+        $buyer=Feedback::select('buyer_id')->where('id',$id)->first();
+        $replay->buyer_id=$buyer->buyer_id;
+        $replay->save();
+        return $replay;
     }
 
     /**
@@ -52,19 +57,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-
     public function show($id)
     {
-        // return Category::find($id);
-        $categories = Category::find($id);
-        if($categories){
-        return new CtegoryResource($categories);
-        }else{
-        return "no data to this category";
-        }
-
-
+        //
     }
 
     /**
@@ -73,22 +68,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request,$id)
+    public function edit($id)
     {
-        $category = Category::find($id);
-        if(is_null($category)){
-                  return response()->json(['message' => 'Not Found'],404);
-        }
-        else{
-
-            $category->id=$request->id;
-            $category->name=$request->name;
-            $category->image=$request->image;
-
-
-            $category->update();
-            return $category;
- }
+        //
     }
 
     /**
@@ -111,7 +93,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        return Category::destroy($id);
-
+        //
     }
 }

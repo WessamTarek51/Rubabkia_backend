@@ -81,6 +81,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Feedback::class);
     }
+    public function replay()
+    {
+        return $this->hasMany(Replay::class);
+    }
 
     public function rejectmessage()
     {
@@ -90,6 +94,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function governorate()
     {
         return $this->belongsTo(Governorate::class);
+    }
+
+    public function usermessage()
+    {
+        return $this->hasMany(Usermessage::class);
+    }
+
+    public function adminmessage()
+    {
+        return $this->hasMany(Adminmessage::class);
     }
 
 }

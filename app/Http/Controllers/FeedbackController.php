@@ -21,6 +21,27 @@ class FeedbackController extends Controller
         return FeedbackResource::collection($feedback);
     }
 
+    public function feeduser(Request $request,$id)
+    {
+        $seller = auth()->user()->id;
+        $replays = Feedback::select('*')->where('seller_id',$id)->get();
+
+
+        return FeedbackResource::collection($replays);
+    }
+    
+    public function allfeeds()
+    {
+        // return Category::all();
+        $feedbacks = Feedback::all();
+        return FeedbackResource::collection($feedbacks);
+
+    }
+    // public function getall(){
+    //     $users = User::all();
+    //     return FeedbackResource::collection($feedbacks);
+    // }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -48,7 +69,7 @@ class FeedbackController extends Controller
     //    return $feedback;
         $feedback->save();
         return $feedback;
-        
+
     //     return response()->json([
     //         'status'=>1,
     //         'message'=>'feedbaaack  sent',
@@ -100,6 +121,6 @@ class FeedbackController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Feedback::destroy($id);
     }
 }
