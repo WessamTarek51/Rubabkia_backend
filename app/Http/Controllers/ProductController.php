@@ -177,10 +177,23 @@ class ProductController extends Controller
         return Product::destroy($id);
 
     }
+    public function showcatwithotlogin($catID)
+    {   
+        
+        $id = Product::select('*')->where('category_id',$catID)->get();
+
+
+        return ProductResource::collection($id);
+
+                    // return $id;
+        // $prosucts = Product::all();
+    }
 
     public function showcat($catID)
-    {
-        $id = Product::select('*')->where('category_id',$catID)->get();
+    {   
+        $user = auth()->user()->id;
+        // $product = Product::select ('*')->where('user_id','!=',$user)->get();
+        $id = Product::select('*')->where('category_id',$catID)->where('user_id','!=',$user)->get();
 
 
         return ProductResource::collection($id);

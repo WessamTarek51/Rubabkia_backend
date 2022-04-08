@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Feedback;
 use App\Models\Acceptedmessage;
 use App\Http\Resources\FeedbackResource;
+use Illuminate\Support\Facades\DB;
+
 class FeedbackController extends Controller
 {
     /**
@@ -111,6 +113,18 @@ class FeedbackController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function feddel(Request $request,$id){
+
+
+
+
+        $fed = DB::table('feedbacks')
+              ->where('id', $id)
+              ->update(['is_deleted' => 1]);
+
+        return  FeedbackResource::collection($fed);
     }
 
     /**

@@ -64,7 +64,8 @@ Route::get('sales',[ProductController::class,'sale']);
 Route::get('productsWithOutLogin',[ProductController::class,'productsWithOutLogin']);
 
 // Route::get('products/{id}',[ProductController::class,'show'])->middleware('auth:sanctum');
-Route::get('product/{catID}',[ProductController::class,'showcat']);
+Route::get('product/{catID}',[ProductController::class,'showcat'])->middleware('auth:sanctum');
+Route::get('productt/{catID}',[ProductController::class,'showcatwithotlogin']);
 Route::get('products/{id}',[ProductController::class,'show']);
 Route::delete('products/{id}',[ProductController::class,'destroy']);
 Route::delete('deleteproduct/{id}',[ProductController::class,'delete'])->middleware('auth:sanctum');
@@ -130,6 +131,7 @@ Route::get('users',[UserController::class,'users']);
 
 
 Route::post("replays/{id}",[ReplayController::class,'store'])->middleware('auth:sanctum');
+Route::post("delfed/{id}",[FeedbackController::class,'feddel']);
 Route::get("replayss/{id}",[FeedbackController::class,'feeduser'])->middleware('auth:sanctum');
 
 // Route::post('/sanctum/token', function (Request $request) {

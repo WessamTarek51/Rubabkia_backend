@@ -24,6 +24,7 @@ class FeedbackResource extends JsonResource
             'seller_id'=>$this->seller_id,
             'buyer_name'=>$user->name,
             'seller_name'=>$seller->name,
+            'is_deleted'=>$this->is_deleted,
             'image'=>$image->image,
             // 'productname'=>$this->productname,
             'message'=>$this->message,
