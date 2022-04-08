@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Feedback extends Model
 {
     protected $table = 'feedbacks';
-    protected $fillable = ["buyer_id","seller_id","message"];
+    protected $fillable = ["buyer_id","seller_id","message","is_deleted"];
     public function user()
     {
         return $this->belongsTo(User::class);
